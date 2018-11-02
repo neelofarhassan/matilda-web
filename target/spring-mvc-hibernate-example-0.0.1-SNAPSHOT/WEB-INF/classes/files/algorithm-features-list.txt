@@ -1,0 +1,89 @@
+[
+			{
+				"problemType":"optimization",
+				"problemName":"Graph Coloring Problem",
+				"problemCode":"gcp",
+				"libraryProblem":true,
+				"libraryAlgorithms":[
+								{
+									"algorithmName":"Dsatur",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								},
+								{
+									"algorithmName":"Maxis",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								
+								}
+							],
+				"features":[
+								{
+									"featureName":"Vertices",
+									"featureType":"numeric"
+								},
+								{
+									"featureName":"Edges",
+									"featureType":"numeric"
+								},
+								{
+									"featureName":"Density",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Algebric Connectivity",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Energy",
+									"featureType":"continuous"
+								}
+							]			
+			},
+			{
+				"problemType":"optimization",
+				"problemName":"Travelling Salesman Problem",
+				"problemCode":"tsp",
+				"libraryProblem":true,
+				"libraryAlgorithms":[
+								{
+									"algorithmName":"dsatur",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								},
+								{
+									"algorithmName":"maxis",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								
+								}
+							],
+				"features":[
+								{
+									"featureName":"vertices",
+									"featureType":"numeric"
+								},
+								{
+									"featureName":"edges",
+									"featureType":"numeric"
+								},
+								{
+									"featureName":"density",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"algebric_connectivity",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"energy",
+									"featureType":"continuous"
+								}
+							]			
+			}
+			
+]
