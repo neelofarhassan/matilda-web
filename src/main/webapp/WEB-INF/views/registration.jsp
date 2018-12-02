@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -14,6 +16,8 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <link href="<c:url value='/resources/css/app.css' />" rel="stylesheet"></link>
+<link href="<c:url value='/resources/css/matilda.css' />" rel="stylesheet"></link>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('[data-toggle="tooltip"]').tooltip();
@@ -117,7 +121,7 @@ button:hover {
 						</div>
 
 						<div>
-							<label for="lastName">Last Name</label>
+							<label for="lastName" data-required="true">Last Name</label>
 							<form:input type="text" path="lastName" id="lastName"
 								aria-required="true" />
 							<div class="has-error">
@@ -149,16 +153,20 @@ button:hover {
 						</div>
 
 						<div>
-							<span>						
-							<label for="research_description" data-required="true">Short
-								Research Description</label> <a href="#" data-toggle="tooltip" style="text-decoration:none"
-								title="hello hello hello hello hello hello hello hello hello hellohello hello hello hello hellohello hello hello hello hellohello hello hello hello hello">Why
-								do we need it?</a> 
-							</span>
+<!-- 							<label for="research_description" data-required="true">Short -->
+<!-- 								Research Description</label> <a href="#" data-toggle="tooltip" style="text-decoration:none" -->
+<!-- 								title="hello hello hello hello hello hello hello hello hello hellohello hello hello hello hellohello hello hello hello hellohello hello hello hello hello">Why -->
+<!-- 								do we need it?</a>  -->
+								<label><span class="tooltip">Short Research Description<span class="tooltiptext">Please provide a brief description of how do you want to interact with 
+								our repository? This will help us to give access to only legitimate researchers to our repository who doesn't breach the security and
+								contribute quality data. </span></span></label>
 							<form:textarea path="researchDescription"
 								id="research_description" aria-required="true" />
 						</div>
-
+							
+							<div class="g-recaptcha"
+			data-sitekey="6Ldso3kUAAAAAJiQwokosrghpu_t5UJjuiYcWbVF"></div>
+							
 						<form:hidden path="status" id="status" value="waiting" />
 						<form:hidden path="userProfiles" id="userProfiles" value="1" />
 					</fieldset>

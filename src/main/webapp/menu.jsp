@@ -77,24 +77,24 @@
 			      </div>
 			    </li>
 			    <li>
-			      <a href="contact-us">Download</a>
+			      <a href="contact-us">Library</a>
 			      <div class="inner">
 			      	<ul>
 			      		<li><a href="">Algorithms</a></li>
 			      		<li><a href="">Instances</a></li>
 			      		<li><a href="">Papers</a></li>
 			      		<li><a href="">Features</a></li>
-			      		<li><a href="">Instance Space Analysis</a></li>
+<!-- 			      		<li><a href="">Instance Space Analysis</a></li> -->
 			      	</ul>
 			      </div>
 			    </li>
 			    <li>
-			      <a href="/another">Upload</a>
+			      <a href="/another">Data Analytics</a>
 			      <div class="inner"> 
 			      	<ul>
 			      		<li><a href="">Submission Guidelines</a></li>
-			      		<li><a href="<c:url value="/submit" />">Library Contributions</a></li>
-			      		<li><a href="<c:url value="/data-analytics" />">Data Analytics</a></li>
+			      		<li><a href="<c:url value="/submit" />">Submit Data</a></li>
+			      		<li><a href="<c:url value="/data-analytics" />">Instance Space Analysis</a></li>
 			      	</ul>
 			      </div>
 			    </li>

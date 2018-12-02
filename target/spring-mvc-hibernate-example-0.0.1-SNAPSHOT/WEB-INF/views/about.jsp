@@ -87,7 +87,9 @@
 		  <li class="simple-listing__item">
 		  <div class"simple-listing__link">
 <%-- 		      <div class="simple-listing__img" style="background-image: url(<c:url value="/resources/images/kate.jpeg" />);"></div> --%>
-<div><img class="list_img" src="<c:url value="/resources/images/kate.jpeg" />"></div>
+<%-- <div><img class="list_img" src="<c:url value="/resources/images/kate.jpeg" />"></div> --%>
+<div><img class="list_img" src="<c:url value="/resources/images/Webp.net-resizeimage.jpg" />"></div>
+
 		      <h3 class="simple-listing__heading">Professor Kate Smith-Miles</h3>
 		      <h3>Project Lead</h3>
 		      <p class="simple-listing__excerpt">
@@ -101,6 +103,7 @@
 		  <li class="simple-listing__item">
 		    <div class="simple-listing__link">
 <%-- 		      <div class="simple-listing__img" style="background-image: url( <c:url value="/resources/images/andres.jpg" /> );"></div> --%>
+<%-- <div><img class="list_img" src="<c:url value="/resources/images/andres.jpg" />"></div> --%>
 <div><img class="list_img" src="<c:url value="/resources/images/andres.jpg" />"></div>
 		      <h3 class="simple-listing__heading">Dr Mario Andres Munoz Acosta</h3>
 		      <h3>Research Fellow</h3>
@@ -116,7 +119,7 @@
 		  <li class="simple-listing__item">
 		    <div class="simple-listing__link">
 <%-- 		      <div class="simple-listing__img" style="background-image: url( <c:url value="/resources/images/asghar.jpg" /> );"></div> --%>
-<div><img class="list_img" src="<c:url value="/resources/images/asghar.jpg" />"></div>
+				<div><img class="list_img" src="<c:url value="/resources/images/asghar.jpg" />"></div>
 		      <h3 class="simple-listing__heading">DR Asghar Moeini Korbekandi</h3>
 		      <h3>Research Fellow</h3>
 		      <p class="simple-listing__excerpt">
@@ -131,7 +134,7 @@
 		  <li class="simple-listing__item">
 		    <div class="simple-listing__link" >
 <%-- 		      <div class="simple-listing__img" style="background-image: url( <c:url value="/resources/images/sevvandi.jpeg" />  );"></div> --%>
-<div><img class="list_img" src="<c:url value="/resources/images/sevvandi.jpeg" />"></div>
+			<div><img class="list_img" src="<c:url value="/resources/images/seevandi.jpg" />"></div>
 		      <h3 class="simple-listing__heading">Dr Sevvandi Kandanaarachchi</h3>
 		      <h3>Research Fellow</h3>
 		      <p class="simple-listing__excerpt">
@@ -142,11 +145,24 @@
 		    </div>
 		</li>
 		 
+		<li class="simple-listing__item">
+		    <div class="simple-listing__link">
+<%-- 		      <div class="simple-listing__img" style="background-image: url( <c:url value="/resources/images/baatar.jpeg" /> );"></div> --%>
+			<div><img class="list_img" src="<c:url value="/resources/images/baatar.jpeg" />"></div>
+		      <h3 class="simple-listing__heading">Dr Davaatseren Baatar</h3>
+		      <h3>Research Fellow</h3>
+		      <p class="simple-listing__excerpt">
+		        Dr Davaatseren works in the School of Mathematical Sciences at Monash University as a Research Fellow. His areas of interest
+		        are Optimisation and Mixed integer programming and their applications in real world problems.
+		        <a class="no_underline" href="https://research.monash.edu/en/persons/davaatseren-baatar" rel="">Find out more ></a>
+		      </p>
+		    </div>
+		</li>
 		
 		  <li class="simple-listing__item">
 		    <div class="simple-listing__link">
 <%-- 		      <div class="simple-listing__img" style="background-image: url( <c:url value="/resources/images/jeffery.jpeg" /> );"></div> --%>
-<div><img class="list_img" src="<c:url value="/resources/images/jeffery.jpeg" />"></div>
+			<div><img class="list_img" src="<c:url value="/resources/images/jeffery.jpg" />"></div>
 		      <h3 class="simple-listing__heading">Jeffrey Christiansen</h3>
 		      <h3>Research Assistant</h3>
 		      <p class="simple-listing__excerpt">
@@ -157,25 +173,13 @@
 		</li>
 		 
 		
-		  <li class="simple-listing__item">
-		    <div class="simple-listing__link">
-<%-- 		      <div class="simple-listing__img" style="background-image: url( <c:url value="/resources/images/baatar.jpeg" /> );"></div> --%>
-<div><img class="list_img" src="<c:url value="/resources/images/baatar.jpeg" />"></div>
-		      <h3 class="simple-listing__heading">Dr Davaatseren Baatar</h3>
-		      <h3>Research Fellow</h3>
-		      <p class="simple-listing__excerpt">
-		        Dr Davaatseren works in the School of Mathematical Sciences at Monash University as a Research Fellow. His areas of interest
-		        are Optimisation and Mixed integer programming and their applications in real world problems.
-		        <a class="no_underline" href="https://research.monash.edu/en/persons/davaatseren-baatar" rel="">Find out more ></a>
-		      </p>
-		    </div>
-		</li>
+
 		 
 		
 		  <li class="simple-listing__item">
 		    <div class="simple-listing__link">
 <%-- 		      <div class="simple-listing__img" style="background-image: url( <c:url value="/resources/images/yan.jpeg" /> );"></div> --%>
-<div><img class="list_img" src="<c:url value="/resources/images/yan.jpeg" />"></div>
+				<div><img class="list_img" src="<c:url value="/resources/images/yan.jpeg" />"></div>
 		      <h3 class="simple-listing__heading">Tao Yan</h3>
 		      <h3>Research Assistant</h3>
 		      <p class="simple-listing__excerpt">

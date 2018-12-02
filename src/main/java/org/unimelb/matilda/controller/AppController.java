@@ -1,9 +1,18 @@
 package org.unimelb.matilda.controller;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -26,6 +36,7 @@ import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +50,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.unimelb.matilda.model.ALgorithmicFootPrint;
 import org.unimelb.matilda.model.Algorithm;
 import org.unimelb.matilda.model.Feature;
@@ -50,13 +63,17 @@ import org.unimelb.matilda.service.MailService;
 import org.unimelb.matilda.service.UserProfileService;
 import org.unimelb.matilda.service.UserService;
 import org.unimelb.matilda.util.FileUtil;
+import org.unimelb.matilda.util.JSONUtil;
+import org.unimelb.matilda.util.VerifyRecaptcha;
+import com.sun.corba.se.impl.protocol.InfoOnlyServantCacheLocalCRDImpl;
+import com.sun.org.apache.bcel.internal.classfile.LineNumber;
 
 
  
  
  
 @Controller
-@PropertySource("classpath:users.properties")
+@PropertySource("classpath:application.properties")
 @RequestMapping("/")
 @SessionAttributes("roles")
 public class AppController {
@@ -81,8 +98,15 @@ public class AppController {
     
     @Value("${userdata.path}")
     private String userDataPath;
+    
+    @Value("${matlab.script.command}")
+    private String matlab_command;
+    
+    @Value("${max.wait}")
+    private String maximumWaitForFileLoad;
+    
+    static final Logger logger = Logger.getLogger(AppController.class); 
 
-     
     /**
      * This method will list all existing users.
      */
@@ -117,17 +141,27 @@ public class AppController {
         return "registration";
     }
  
+    
     /**
      * This method will be called on form submission, handling POST request for
      * saving user in database. It also validates the user input
+     * @throws IOException 
      */
     @RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-    public String saveUser(@Valid User user, BindingResult result,
-            ModelMap model) {
- 
-        if (result.hasErrors()) {
-            return "registration";
-        }
+    public String saveUser(HttpServletRequest request, @Valid User user, BindingResult result,
+            ModelMap model) throws IOException {
+    			String gRecaptchaResponse = request
+    					.getParameter("g-recaptcha-response");
+    			System.out.println(gRecaptchaResponse);
+    			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+    			System.out.println(verify);
+    			if(!verify) {
+    				result.rejectValue("captcha_error", "error.human", "User could not be identified as a human. Please try again");	
+    			}
+	    			
+	        if (result.hasErrors()) {
+	            return "registration";
+	        }
  
         /*
          * Preferred way to achieve uniqueness of field [sso] should be implementing custom @Unique annotation 
@@ -144,17 +178,18 @@ public class AppController {
         }
          
         userService.saveUser(user);
+    	mailService.sendRegistrationEmail(user);
+    	
  
         model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
         model.addAttribute("loggedinuser", getPrincipal());
-        //return "success";
         return "registrationsuccess";
     }
  
     @RequestMapping(value= "/feedback", method= RequestMethod.POST)
     public String submitUserFeedback(@Valid @ModelAttribute("usermessage")UserFeedback userFeedback, BindingResult result, ModelMap model) {
     	System.out.println(userFeedback);
-    	mailService.emailUserFeedback(userFeedback);
+    	mailService.sendFeedbackEmail(userFeedback);
     	
     	return "feedbacksubmission-success";
     }
@@ -242,8 +277,10 @@ public class AppController {
      * If users is already logged-in and tries to goto login page again, will be redirected to list page.
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage() {
+    public String loginPage(HttpServletRequest request) {
         if (isCurrentAuthenticationAnonymous()) {
+        	String referrer = request.getHeader("Referer");
+        	System.out.println(referrer);
             return "login";
         } else {
             return "redirect:/list";  
@@ -348,6 +385,11 @@ public class AppController {
     	}
     	model.addAttribute("optimizationProblems", optimizationAlogs);
     	model.addAttribute("modelLearning", learningTechniques);
+		boolean authenticationStatus=false;
+		if(!isCurrentAuthenticationAnonymous()) {
+			authenticationStatus=true;
+		}
+		model.addAttribute("authenticationStatus", authenticationStatus);
     	return "footprintform";
     }
     
@@ -363,35 +405,75 @@ public class AppController {
 //    }
         
     @RequestMapping(value="/generate-footprint", method=RequestMethod.POST)
-    public String generateFootPrint(HttpServletRequest servletRequest, @ModelAttribute ALgorithmicFootPrint algorithm, Model model) throws IOException {
-    	String problemName = algorithm.getProblem().getProblemName();
-    	Boolean isLibraryProblem = algorithm.getProblem().getLibraryProblem();
-    	System.out.println(problemName + ":" + isLibraryProblem);
-    	String[] selectedAlgos = servletRequest.getParameterValues("selected_algorithms");
-
-    	System.out.println(selectedAlgos);
-//    	if(isCurrentAuthenticationAnonymous()) { 
-//    		return "redirect:/login";
-//    	}else {
-//    		String userName = getPrincipal();
-//        	System.out.println(algorithm);
-//        	File performanceFile = new File(userDataPath + "/" + userName + "/" + problemName + "/user-input-files/performance.csv");
-//        	if(!performanceFile.exists()) {
-//        		performanceFile.mkdirs();
-//        	}
-//        	algorithm.getPerformanceFile().transferTo(performanceFile);
-//        	File binaryFile = new File(userDataPath + "/" + userName + "/" + problemName + "/user-input-files/binary.csv");
-//        	if(!binaryFile.exists()) {
-//        		binaryFile.mkdirs();
-//        	}
-//        	algorithm.getBinaryFile().transferTo(binaryFile);
-//        	System.out.println("performance file submitted");
-//        	String algorithmFootPrint = userDataPath + "/" + userName + "/" + problemName +  "/user-output-files/footprint_portfolio.png";
-//        	model.addAttribute("footprint", algorithmFootPrint);
-//        	return "Algorithmic-footprints";	
-//    	}
-    	System.out.println(algorithm);
-    	return "";
+    public ModelAndView generateFootPrint(HttpServletRequest servletRequest, @ModelAttribute @Valid ALgorithmicFootPrint algorithm, BindingResult result, Model model) throws IOException {
+    	if(isCurrentAuthenticationAnonymous()) { 
+    		return new ModelAndView("redirect:/login");
+    	}else {
+    		boolean authenticationStatus=true;
+    		model.addAttribute("authenticationStatus", authenticationStatus);
+    		String problemName="";
+    		String userName = getPrincipal();
+        	Boolean isLibraryProblem = algorithm.getProblem().getLibraryProblem();
+        	if(isLibraryProblem) {
+	        	problemName = algorithm.getProblem().getProblemName();
+	        	String[] selectedAlgoParam = servletRequest.getParameterValues("selected_algorithms");
+	        	List<String> selectedAlgorithms = new ArrayList<>();
+	        	if(selectedAlgoParam != null && selectedAlgoParam.length > 0) {
+	        		for(int i=0; i<selectedAlgoParam.length; i++) {
+	        			selectedAlgorithms.add(selectedAlgoParam[i]);
+	        		}
+	        		algorithm.setSelectedAlgorithms(selectedAlgorithms);
+	        	}
+	        	
+	        	String[] selectedFeaturesParam = servletRequest.getParameterValues("selected_features");
+	        	List<String> selectedFeatures = new ArrayList<>();
+	        	if(selectedFeaturesParam != null && selectedFeaturesParam.length > 0) {
+	        		for(int i=0; i<selectedFeaturesParam.length; i++) {
+	        			selectedFeatures.add(selectedFeaturesParam[i]);
+	        		}
+	        		algorithm.setSelectedFeatures(selectedFeatures);
+	        	}
+	        	String newAlgorithm = servletRequest.getParameter("new_algo");
+	        	String newFeature = servletRequest.getParameter("new_feature");
+	        	if(newAlgorithm != null && !newAlgorithm.isEmpty()) {
+	        		algorithm.setAddNewAlgorithm(true);
+	        		MultipartFile file = algorithm.getPerformanceFile();
+	        		logger.info("submitting performance file for library problem. ");
+	            	File performanceFile = new File(userDataPath + "/" + userName + "/" + problemName + "/performance.csv");
+	            	if(!performanceFile.exists()) {
+	            		performanceFile.getParentFile().mkdirs();
+	            	}
+	            	file.transferTo(performanceFile);
+	        	}
+	        	if(newFeature != null && !newFeature.isEmpty()) {
+	        		algorithm.setAddNewFeature(true);
+	        		MultipartFile file = algorithm.getFeatureFile();
+	        		logger.info("subitting feature file for library problem");
+	        		File featureFile = new File(userDataPath + "/" + userName + "/" + problemName + "/feature.csv");
+	            	if(!featureFile.exists()) {
+	            		featureFile.getParentFile().mkdirs();
+	            	}
+	            	file.transferTo(featureFile);
+	        	}
+        	}else {
+        		problemName = algorithm.getCustomProblemName();
+        	}
+        		JSONUtil jsonUtil = new JSONUtil();
+        		jsonUtil.createConfigurationJSON(userName, userDataPath, algorithm);
+        	
+        	
+        	String algorithmFootPrint = userDataPath + "/" + userName + "/" + problemName +  "/footprint_portfolio.png";
+        	model.addAttribute("footprint", algorithmFootPrint);
+        	
+//        	boolean success = executeFootprintGenerationMatlabCode(userName, problemName);
+        	boolean success = true;
+        	if(success) {
+        		return new ModelAndView("Algorithmic-footprints");
+        	}else {
+        		model.addAttribute("error", "Sorry, some problem occured while executing your code. Please contact website administation. ");
+        		return new ModelAndView("Algorithmic-footprints-failure");
+        	}
+    	}
     }
     
     @RequestMapping(value="/showgraph", method=RequestMethod.GET)
@@ -400,22 +482,9 @@ public class AppController {
     	return "graph";
     }
     
-//    @RequestMapping(value = "/showAlgosFeatures", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-//    public @ResponseBody
-//    List<Algorithm> showAlgorithmsAndFeatures(@RequestParam("problemName") String problemName) {
-//    	FileUtil fileUtil = new FileUtil();
-//    	String filePath = "files/algorithm-features-list.txt";
-//    	List<Problem> problems = fileUtil.JSONToProblemConverter(filePath);
-//    	List<Algorithm> algorithms = new ArrayList<>();
-//    	for(Problem problem:problems) {
-//    		if(problem.getProblemCode().equals(problemName)) {
-//    			algorithms = problem.getLibraryAlgorithms();
-//    		}
-//    	}
-//    	return algorithms;
-//    }
+
     
-    @RequestMapping(value = "/showAlgosFeatures", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/showAlgosFeatures", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     Map<String, List<String>> showAlgorithmsAndFeatures(@RequestParam("problemName") String problemName) {
     	FileUtil fileUtil = new FileUtil();
@@ -442,6 +511,7 @@ public class AppController {
     	algosFeaturesMap.put("features", featureNames);
     	return algosFeaturesMap;
     }
+    
  
     /**
      * This method returns the principal[user-name] of logged-in user.
@@ -465,5 +535,114 @@ public class AppController {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authenticationTrustResolver.isAnonymous(authentication);
     }
- 
+
+    @RequestMapping(value="/test", method=RequestMethod.GET)
+    public ModelAndView dummyMethodForConsoleOutputTesting() {
+    	return new ModelAndView("Algorithmic-footprints");
+    }
+    
+    public boolean executeFootprintGenerationMatlabCode(String userName, String problemName){
+    	boolean success = true;
+    	String path = userDataPath + "/"+userName+"/"+problemName;
+    	StringBuffer output = new StringBuffer();
+//    	String[] command = {"/servers/slurm/spool/run-matilda-server.sh", path};
+    	String[] command = {matlab_command, path};
+    	ProcessBuilder p = new ProcessBuilder(command);
+    	    try {  
+    	        // create a process builder to send a command and a argument
+    	        Process p2 = p.start(); 
+//    	        p2.waitFor();
+    	        BufferedReader br = new BufferedReader(new InputStreamReader(p2.getInputStream()));
+    	        String line;
+    	        logger.info("Output of running " + command + " is: ");
+    	        System.out.println("Output of running " + command + " is: ");
+    	        while ((line = br.readLine()) != null) {
+    	            logger.info(line);
+    	        }
+    	    }catch(Exception e) {
+    	    	
+    	    }
+
+		logger.info("Output from matilda script:" + output.toString() );
+		return success;
+	}
+    
+    @RequestMapping(value = "/readMatlabLogFileRecursively", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Map<Boolean, String[]> readFileContentsRecursively(@RequestParam ("lastModified") long lastModified, @RequestParam("lastLineRead") int lastLineNumberRead, @RequestParam ("userName") String userName, @RequestParam ("problemName") String problemName){
+//    	yes/no -- does it have update contents
+//    	[EOF, lastReadLine, contents, lastModified] -- more contents
+//    	[contents]
+    	String[] mapArray = new String[4];
+    	Map<Boolean, String[]> fileContents = new HashMap<>();
+    	long currentModified = 0;
+    	int lineNumber=0;
+    	StringBuilder fileContent= new StringBuilder();
+    	boolean isModified=false;
+    	File file = new File(userDataPath + "/" + userName + "/" + problemName + "/matilda_logs.txt");
+    	int initialWait = 2000;
+    	while(!file.exists()) {
+    		try {
+				Thread.sleep(2000);
+				if(initialWait >= Integer.parseInt(maximumWaitForFileLoad)) {
+					break;
+				}
+				initialWait += 1000;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    	}
+    	if(!file.exists()) {
+    		fileContents = null;
+    	}else {
+    		BufferedReader reader = null;
+    		try {
+    			currentModified = file.lastModified();
+    			isModified = currentModified != lastModified;
+				reader = new BufferedReader(new FileReader(file));
+				int startingLine = lastLineNumberRead+1;
+				String line="";
+				String lastLine="";
+				
+				
+				while((line = reader.readLine()) != null) {
+					lastLine = line;
+					lineNumber++;
+					if(lastModified == 0) {
+						fileContent.append(line);
+						fileContent.append("<br>");
+						
+					} else if(isModified) {
+						if(lineNumber >= startingLine) {
+							fileContent.append(line);
+							fileContent.append("<br>");
+						}
+					}else {
+						isModified=false;
+					}
+					
+				}
+				if(lastLine.equals("EOF")) {
+					mapArray[0]="true";
+				}else {
+					mapArray[0]="false";
+				}
+				mapArray[1] = String.valueOf(lineNumber);
+				mapArray[2] = fileContent.toString();
+				mapArray[3] = Long.toString(currentModified);
+				fileContents.put(isModified, mapArray);
+    		}
+    	catch(Exception e) {
+    	}finally {
+    		if(reader != null) {
+    		try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    		}
+    	}
+    	}
+    	System.out.println("time last modified: " + lastModified + "\ttime current modified: " + currentModified + "\tline Number: "+ lineNumber + "\tstarting line: " + lastLineNumberRead + "\tis Modified: " + isModified + "\tfile Contents: " + fileContent.toString());
+    	return fileContents;
+    } 
 }

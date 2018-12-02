@@ -12,11 +12,46 @@
 									"performanceThreshold":0.5
 								},
 								{
-									"algorithmName":"Maxis",
+									"algorithmName":"tabu_col",
 									"optimizationCriteria":"min",
 									"performanceCriteria":"abs",
 									"performanceThreshold":0.5
-								
+								},
+								{
+									"algorithmName":"ant_colony",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								},
+								{
+									"algorithmName":"backtracking_dsatur",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								},
+								{
+									"algorithmName":"hill_climber",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								},
+								{
+									"algorithmName":"hybrid_ea",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								},
+								{
+									"algorithmName":"partial_col",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
+								},
+								{
+									"algorithmName":"simple_greedy",
+									"optimizationCriteria":"min",
+									"performanceCriteria":"abs",
+									"performanceThreshold":0.5
 								}
 							],
 				"features":[
@@ -38,6 +73,66 @@
 								},
 								{
 									"featureName":"Energy",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Degree Mean",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Degree StDev",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Average Path Length",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Diameter",
+									"featureType":"numeric"
+								},
+								{
+									"featureName":"Girth",
+									"featureType":"numeric"
+								},
+								{
+									"featureName":"Betweenness Centrality Mean",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Szeged Index",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Revised Szeged Index",
+									"featureType":"numeric"
+								},
+								{
+									"featureName":"Beta Bipartitivity",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Energy",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Eigenvalue StDev",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Eigenvector Centrality",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Mean",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Eigenvector",
+									"featureType":"continuous"
+								},
+								{
+									"featureName":"Centrality StDev",
 									"featureType":"continuous"
 								}
 							]			

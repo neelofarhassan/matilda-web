@@ -21,7 +21,7 @@
 	
   <div class="uomcontent">
     <div class="page-inner">
-	  <%-- 	<%@include file="/breadcrumbs.jsp" %> --%>
+	  <%@include file="/breadcrumbs.jsp" %>
       <div role="main">
       	<c:url var="home" value="/" />
 		<%@include file="/menu.jsp" %>

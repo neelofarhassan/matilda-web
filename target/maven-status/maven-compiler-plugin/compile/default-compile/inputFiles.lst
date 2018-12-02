@@ -13,9 +13,12 @@
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/config/CustomSuccessHandler.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/model/Problem.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/controller/NavigationCtrl.java
+/home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/validator/GlobalExceptionHandler.java
+/home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/util/VerifyRecaptcha.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/model/User.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/controller/AppController.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/dao/UserDao.java
+/home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/validator/FileValidator.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/service/UserServiceImp.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/config/MailConfig.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/dao/UserDaoImp.java
@@ -28,6 +31,7 @@
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/util/FileUtil.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/service/UserProfileServiceImpl.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/converter/RoleToUserProfileConverter.java
+/home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/util/JSONUtil.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/service/UserProfileService.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/config/SecurityConfiguration.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/model/UserProfileType.java

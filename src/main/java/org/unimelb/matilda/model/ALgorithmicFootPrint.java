@@ -3,6 +3,8 @@ package org.unimelb.matilda.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ALgorithmicFootPrint {
 //	library or custom problem
 private Problem problem;
@@ -13,16 +15,62 @@ private Feature feature;
 private String filePath;
 private List<String> selectedAlgorithms = new ArrayList<>();
 private List<String> selectedFeatures = new ArrayList<>();
-//private MultipartFile performanceFile;
-//private MultipartFile binaryFile;
-//true for maximize, false for minimize
-//private Boolean optimizationCriteria = false;;
-////2 for absolute, 1 for relative
-//private Integer performanceCriteria;
-//private Double performanceThreshold;
-
+private MultipartFile performanceFile;
+private MultipartFile featureFile;
+private Boolean addNewAlgorithm;
+private Boolean addNewFeature;
 private Double betaThreshold = 0.5;
+private String customProblemName;
+private Boolean clustering = true;
+private Integer defaultMaximumClusters = 10;
+private Double silhouteThreshold = 0.70;
+private Integer numberOfTrees = 50;
+private Integer maximumIterations = 1000;
+private Integer replicates = 100;
+private Boolean useParallel = false;
+private Integer densityThreshold = 10;
+private Double purityThreshold = 0.75;
+private Integer lowerDistanceThreshold = 1;
+private Integer higherDistanceThreshold = 25;
+private Integer attemptsByPBLDR = 10;
+private Boolean calculateAnalytics = false;
+private Integer stoppingCriteria = 0;
+private Integer maxRestartFunEvals = 0;
+private Double maxFunEvals = Math.exp(4);
+private Boolean parallelEval = false;
+private Boolean DispFinal = false;
 
+
+public Boolean getAddNewAlgorithm() {
+	return addNewAlgorithm;
+}
+public void setAddNewAlgorithm(Boolean addNewAlgorithm) {
+	this.addNewAlgorithm = addNewAlgorithm;
+}
+public Boolean getAddNewFeature() {
+	return addNewFeature;
+}
+public void setAddNewFeature(Boolean addNewFeature) {
+	this.addNewFeature = addNewFeature;
+}
+public String getCustomProblemName() {
+	return customProblemName;
+}
+public void setCustomProblemName(String customProblemName) {
+	this.customProblemName = customProblemName;
+}
+public MultipartFile getPerformanceFile() {
+	return performanceFile;
+}
+public void setPerformanceFile(MultipartFile performanceFile) {
+	this.performanceFile = performanceFile;
+}
+public MultipartFile getFeatureFile() {
+	return featureFile;
+}
+public void setFeatureFile(MultipartFile featureFile) {
+	this.featureFile = featureFile;
+}
 public Feature getFeature() {
 	return feature;
 }
@@ -47,26 +95,7 @@ private Double diversityThreshold= 0.01;
 private Boolean coorelation = true;;
 private Integer correlationThreshold = 5;
 
-private Boolean clustering = true;
-private Integer defaultMaximumClusters = 10;
-private Double silhouteThreshold = 0.70;
-private Integer numberOfTrees = 50;
-private Integer maximumIterations = 1000;
-private Integer replicates = 100;
-private Boolean useParallel = false;
 
-private Integer densityThreshold = 10;
-private Double purityThreshold = 0.75;
-private Integer lowerDistanceThreshold = 1;
-private Integer higherDistanceThreshold = 25;
-
-private Integer attemptsByPBLDR = 10;
-private Boolean calculateAnalytics = false;
-private Integer stoppingCriteria = 0;
-private Integer maxRestartFunEvals = 0;
-private Double maxFunEvals = Math.exp(4);
-private Boolean parallelEval = false;
-private Boolean DispFinal = false;
 
 
 public Algorithm getAlgorithm() {

@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().
-		authorizeRequests().antMatchers("/", "/submit")
+		authorizeRequests().antMatchers("/", "/submit", "/data-analytics")
         .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
         .antMatchers("/list", "/newuserslist", "/approveuser-**")
         .access("hasRole('ADMIN')")

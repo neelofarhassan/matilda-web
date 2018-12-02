@@ -8,7 +8,7 @@ private String algorithmName;
 private String optimizationCriteria;
 //2 for absolute, 1 for relative
 private String performanceCriteria;
-private Double performanceThreshold;
+private Double performanceThreshold = 0.05;
 private MultipartFile performanceFile;
 
 public MultipartFile getPerformanceFile() {

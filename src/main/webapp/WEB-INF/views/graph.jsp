@@ -10,75 +10,127 @@
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <title> Matilda </title>
   <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css">
-  <link rel="stylesheet" href="/resources/css/matilda.css">
+  <link rel="stylesheet" href="<c:url value="/resources/css/matilda.css" /> ">
   <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
 <script type="text/javascript">
-var ctx = "${pageContext.request.contextPath}"
-        jQuery(document).ready(function() { 
- 
-            var options = {
-                chart: {
-                    renderTo: 'container',
-                    type: 'column'
-                },
-                title: {
-                    text: 'Tiny Tool Monthly Sales'                 
-                },
-                subtitle: {
-                    text: '2014 Q1-Q2'
-                },
-                xAxis: {
-                    categories: []
-                },
-                yAxis: {
-                    title: {
-                        text: 'Sales'
-                    }
-                },
-                series: []
-            };
-            // JQuery function to process the csv data
-            $.get('<c:url value="/resources/graphcsvs/example.csv" />', function(data) {
-                // Split the lines
-                var lines = data.split('\n');
-                $.each(lines, function(lineNo, line) {
-                    var items = line.split(',');
-                     
-                    // header line contains names of categories
-                    if (lineNo == 0) {
-                        $.each(items, function(itemNo, item) {
-                            //skip first item of first line
-                            if (itemNo > 0) options.xAxis.categories.push(item);
-                        });
-                    }
-                     
-                    // the rest of the lines contain data with their name in the first position
-                    else {
-                        var series = { 
-                            data: []
-                        };
-                        $.each(items, function(itemNo, item) {
-                            if (itemNo == 0) {
-                                series.name = item;
-                            } else {
-                                series.data.push(parseFloat(item));
-                            }
-                        });
-                         
-                        options.series.push(series);
- 
-                    }
-                     
-                });
-                //putting all together and create the chart
-                var chart = new Highcharts.Chart(options);
-            });         
-             
-        });
-        </script>
+$(document).ready(function() {  
+
+//  // JQuery function to process the csv data
+ $.get('<c:url value="/resources/graphcsvs/coordinates.csv" />', function(data) {
+     // Split the lines
+     var lines = data.split('\n');
+     var series_data = new Array();
+     var x_label, ylabel;
+     $.each(lines, function(lineNo, line) {
+    	 if(lineNo == 0){
+    		 var items = line.split(',');
+    		 $.each(items, function(itemNo, item){
+    			 if(itemNo == 0){
+    				 x_label= item;
+    			 }else{
+    				 y_label = item;
+    			 }
+    		 });
+    	 }else{
+	         var items = line.split(',');
+	         var items_subarray = new Array();
+	      	 $.each(items, function(itemNo, item) {
+	      		items_subarray.push(parseFloat(item));
+	  		});
+	      	 console.log(items_subarray);
+	      	series_data.push(items_subarray);
+		}
+     });
+
+   var chart = {
+      type: 'scatter',
+      zoomType: 'xy'
+   };
+
+   var title = {
+      text: 'Title ???'   
+   };
+   var subtitle = {
+      text: ''  
+   };
+   var xAxis = {
+      title: {
+         enabled: true,
+         text: x_label
+      },
+      startOnTick: true,
+      endOnTick: true,
+      showLastLabel: true
+   };
+   var yAxis = {
+      title: {
+         text: y_label
+      }
+   };
+   var legend = {   
+      layout: 'vertical',
+      align: 'left',
+      verticalAlign: 'top',
+      x: 100,
+      y: 100,
+      floating: true,
+      backgroundColor: (
+         Highcharts.theme && Highcharts.theme.legendBackgroundColor) ||
+         '#FFFFFF',
+      borderWidth: 1
+   }  
+   var plotOptions = {
+      scatter: {
+         marker: {
+            radius: 5,
+            states: {
+               hover: {
+                  enabled: true,
+                  lineColor: 'rgb(100,100,100)'
+               }
+            }
+         },
+         states: {
+            hover: {
+               marker: {
+                  enabled: false
+               }
+            }
+         },
+         tooltip: {
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '{point.x}, {point.y}'
+         }
+      }
+   };
+   
+   var series = [
+      {
+         name: 'series name?',
+         color: 'rgba(223, 83, 83, .5)',
+         data: series_data
+      }
+   ];     
+
+   var json = {};   
+   json.chart = chart; 
+   json.title = title;   
+   json.subtitle = subtitle; 
+   json.legend = legend;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;  
+   json.series = series;
+   json.plotOptions = plotOptions;
+   $('#container').highcharts(json);
+ });   
+   
+});
+</script>
   
   <style>
   	#main_container {
@@ -98,17 +150,10 @@ var ctx = "${pageContext.request.contextPath}"
 		<%@include file="/menu.jsp" %>
 			<div id="container" style="width: 1000px; height: 700px; margin: 0 auto"></div>   
 
-			<c:url var="action" value="/generate-footprint" />
-			<form:form action="${action}" commandName="algorithm" method="POST" enctype="multipart/form-data">
-					
-					<div>
-<!-- 						<label>What problem do you want to analyze?</label> -->
-						<p>
-						<form:radiobutton id="library_problem1" path="libraryProblem" value="true" name="problem_type" label="Problem from our library"/>
-						<form:radiobutton id="library_problem1" path="libraryProblem" value="false" name="problem_type" label="Custom problem"/>
-						</p>
-					</div> 
-					</form:form>
+			
+			
+<%-- 			<img alt="graph" src="<c:url value="/userimages/footprint_maxis_colours.png" />"> --%>
+<%-- 			<img alt="graph" src="<c:url value="/resources/images/andres.jpg" />"> --%>
 	
 
         <%@include file="/footer.jsp" %>
@@ -117,102 +162,3 @@ var ctx = "${pageContext.request.contextPath}"
   </div>
 </body>
 </html>
-
-
-
-
-<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1" --%>
-<%--     pageEncoding="ISO-8859-1"%> --%>
-<%--     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> --%>
-<%--     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> --%>
-<!-- <!DOCTYPE html> -->
-<!-- <html> -->
-<!-- <head> -->
-<!-- <meta charset="ISO-8859-1"> -->
-<!-- <title>Matilda Graph</title> -->
-<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> -->
-<!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
-<!-- <script src="http://code.highcharts.com/modules/exporting.js"></script> -->
-<!-- <script type="text/javascript"> -->
-// var ctx = "${pageContext.request.contextPath}"
-//         jQuery(document).ready(function() { 
- 
-//             var options = {
-//                 chart: {
-//                     renderTo: 'container',
-//                     type: 'column'
-//                 },
-//                 title: {
-//                     text: 'Tiny Tool Monthly Sales'                 
-//                 },
-//                 subtitle: {
-//                     text: '2014 Q1-Q2'
-//                 },
-//                 xAxis: {
-//                     categories: []
-//                 },
-//                 yAxis: {
-//                     title: {
-//                         text: 'Sales'
-//                     }
-//                 },
-//                 series: []
-//             };
-//             // JQuery function to process the csv data
-//             $.get('<c:url value="/resources/graphcsvs/example.csv" />', function(data) {
-//                 // Split the lines
-//                 var lines = data.split('\n');
-//                 $.each(lines, function(lineNo, line) {
-//                     var items = line.split(',');
-                     
-//                     // header line contains names of categories
-//                     if (lineNo == 0) {
-//                         $.each(items, function(itemNo, item) {
-//                             //skip first item of first line
-//                             if (itemNo > 0) options.xAxis.categories.push(item);
-//                         });
-//                     }
-                     
-//                     // the rest of the lines contain data with their name in the first position
-//                     else {
-//                         var series = { 
-//                             data: []
-//                         };
-//                         $.each(items, function(itemNo, item) {
-//                             if (itemNo == 0) {
-//                                 series.name = item;
-//                             } else {
-//                                 series.data.push(parseFloat(item));
-//                             }
-//                         });
-                         
-//                         options.series.push(series);
- 
-//                     }
-                     
-//                 });
-//                 //putting all together and create the chart
-//                 var chart = new Highcharts.Chart(options);
-//             });         
-             
-//         });
-<!--         </script> -->
-<!-- </head> -->
-<!-- <body> -->
-<!-- <div id="container" style="width: 1000px; height: 700px; margin: 0 auto"></div>    -->
-
-<%-- 			<c:url var="action" value="/generate-footprint" /> --%>
-<%-- 			<form:form action="${action}" commandName="algorithm" method="POST" enctype="multipart/form-data"> --%>
-<!-- 				<fieldset> -->
-					
-<!-- 					<div> -->
-<!-- <!-- 						<label>What problem do you want to analyze?</label> --> -->
-<!-- 						<p> -->
-<%-- 						<form:radiobutton id="library_problem1" path="libraryProblem" value="true" name="problem_type" label="Problem from our library"/> --%>
-<%-- 						<form:radiobutton id="library_problem1" path="libraryProblem" value="false" name="problem_type" label="Custom problem"/> --%>
-<!-- 						</p> -->
-<!-- 					</div>  -->
-<!-- 					</fieldset> -->
-<%-- 					</form:form> --%>
-<!-- </body> -->
-<!-- </html> -->
