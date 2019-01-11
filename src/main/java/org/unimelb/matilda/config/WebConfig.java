@@ -92,7 +92,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
    @Override
    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-       registry.addResourceHandler("/userimages/**").addResourceLocations("file:/home/unimelb.edu.au/nneelofar/Documents/Matilda/Algorithms/Andres/MATILDA/");
+       registry.addResourceHandler("/usersdata/**").addResourceLocations("file:/servers/matilda-users/");
    }
 
    // equivalent for <mvc:default-servlet-handler/> tag

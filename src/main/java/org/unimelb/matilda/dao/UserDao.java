@@ -12,11 +12,13 @@ public interface UserDao {
      
     void save(User user);
     
-    void update(User user);
-     
+    void updateEntity(User user);
+    
+    User UpdateUserStatus(User user);
+    
     void deleteBySSO(String sso);
      
     List<User> findAllUsers();
     
- 
+    List<User> findUsersByStatus(String status);
 }

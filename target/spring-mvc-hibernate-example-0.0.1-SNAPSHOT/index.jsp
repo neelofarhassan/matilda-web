@@ -46,7 +46,6 @@
 		</header>
 	
         <div id="main_container">
-        <a href="<c:url value="/test" /> ">Footprint</a>
 			<p><strong>Welcome to Matilda -- </strong>This website allows you to upload your solution
 			and facilitates</p>
 			<ul>

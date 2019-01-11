@@ -55,7 +55,7 @@ public class MailServiceImpl implements MailService {
                 mimeMessage.setFrom("matilda.unimelb@gmail.com");
                 mimeMessage.setRecipient(Message.RecipientType.TO,
                         new InternetAddress("neelofar.eme@gmail.com"));
-                String message = "Dear Neelofar, <br> A new registration request from Matilda is waiting for your approval. <br> <a href=\"http://localhost:8080/spring-mvc-hibernate-example/newuserslist\"> View Request</a>";
+                String message = "Dear Neelofar, <br> A new registration request from Matilda is waiting for your approval. <br> <a href=\"http://formula.its.unimelb.edu.au/matilda/newuserslist\"> View Request</a>";
                 mimeMessage.setText(message, "UTF-8", "html");
                 mimeMessage.setSubject("New Matilda Registration Request");
             }
@@ -80,40 +80,40 @@ public class MailServiceImpl implements MailService {
     }
     
     public void sendFeedbackEmail(UserFeedback userFeedback) {
-	    String smtpHostServer = "smtp.unimelb.edu.au";
-	    
-	    Properties props = System.getProperties();
 
-	    props.put("mail.smtp.host", smtpHostServer);
-
-	    Session session = Session.getInstance(props, null);
 	    String subject = "User Query/Feedback";
 	    String body = "<b>MATILDA Feedback/Query</b><br>";
 	    		body+="User: " + userFeedback.getUserName() + "<br>";
 	    		body+="Email: " + userFeedback.getEmail() + "<br>";
 	    		body+="Message: " + userFeedback.getMessage();
 	    
-	    prepareEmail(session, adminEmail, subject, body);
+	    prepareAndSendEmail( adminEmail, subject, body);
     }
     
     public void sendRegistrationEmail(User user) {
-	    String smtpHostServer = "smtp.unimelb.edu.au";
-	    
-	    Properties props = System.getProperties();
 
-	    props.put("mail.smtp.host", smtpHostServer);
-
-	    Session session = Session.getInstance(props, null);
 	    String subject = "New Registration Request";
 	    String body = "A new registration request from Matilda is waiting for your approval. <br>" ;
-	    body+="<a href=\"http://localhost:8080/spring-mvc-hibernate-example/newuserslist\"> View Request</a>";
+	    body += "<a href=\"http://localhost:8080/spring-mvc-hibernate-example/newuserslist\"> View Request</a>";
 	    
-	    prepareEmail(session, adminEmail, subject, body);
+	    prepareAndSendEmail( adminEmail, subject, body);
 	}
     
-    private void prepareEmail(Session session, String toEmail, String subject, String body){
+    public void sendRegistrationApprovalEmail(User user) {
+    	String subject = "MATILDA: Registration Approval";
+    	String body = "<p>Dear "+user.getFirstName() + " " + user.getLastName() +", <br><br>You have registered successfully on"
+    			+ "<a href=\"http://formula.its.unimelb.edu.au/matilda\"> MATILDA</a> platform. You can now log-in any time to our website.</p>";
+    	String toEmail = user.getEmail();
+    	prepareAndSendEmail(toEmail, subject, body);
+    }
+    
+    private void prepareAndSendEmail( String toEmail, String subject, String body){
 		try
 	    {
+	      String smtpHostServer = "smtp.unimelb.edu.au";
+	      Properties props = System.getProperties();
+	      props.put("mail.smtp.host", smtpHostServer);
+	      Session session = Session.getInstance(props, null);
 	      MimeMessage msg = new MimeMessage(session);
 	      //set message headers
 	      msg.addHeader("Content-type", "text/HTML; charset=UTF-8");

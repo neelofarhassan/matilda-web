@@ -1,48 +1,80 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
-<html>
+<html lang="en" class="no-js">
 <head>
-	    <title>Matilda</title>
-	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0/uom.css"  />
-		<link rel="icon" href="https://cms.unimelb.edu.au/__data/assets/image/0006/1456044/favicon.gif" type="image/gif" sizes="16x16">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="csrf-param" content="authenticity_token" />
-		<meta name="csrf-token" content="i3gewcvuhVJ1CKiuk1QH0uLG+KANW2YyZ7wXx+sovNIATo3BCKWcOToBRYWMxQ/cir/jzDBB3MAgLOsan3s/aA==" />
-		<style>.lazy {display:inline;max-width:123px !important;height:auto !important;width:auto !important;}</style>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://d2h9b02ioca40d.cloudfront.net/v7.0/uom.js"></script>
-		<script>
-		    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		
-		      ga('create', 'UA-119301545-2', 'auto');
-		    ga('send', 'pageview');
-	    </script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <title> Matilda </title>
+  <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css">
+  <link rel="stylesheet" href="<c:url value="/resources/css/matilda.css" /> ">
+  <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
+  <style>
+  	#main_container {
+  	padding-top:50px;
+  	padding-bottom:50px;
+  	}
+  </style>
 </head>
 <body>
-	<div class="uomcontent">
-			<c:url var="home" value="/" />
-			<noscript><h1>WARNING: It appears that your browser does not have javascript enabled.  Please enable javascript for this site to work correctly</h1></noscript>
-			
-		    <div class="page-inner">
-				<ol class="page-local-history" itemscope="" itemtype="http://schema.org/BreadcrumbList"><li class="root" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-				    <a href="${home}" title="Home" itemprop="item"><span itemprop="name"> Matilda  </span></a>
-				    <meta content="1" itemprop="position" />
-				  </li></ol>
-			</div>
 	
-			<div class='main' id='main-content' role='main'>
-		
-				<h1>Here are the general guidelines to submit your solutions</h1>
-
-		   </div>
-			<%@include file="/footer.jsp" %>
-			<%@include file="/menu.jsp" %>
-	</div>			
+  <div class="uomcontent">
+    <div class="page-inner">
+	  <%@include file="/breadcrumbs.jsp" %>
+	  <%@include file="authheader.jsp" %>
+      <div role="main">
+      	<c:url var="home" value="/" />
+		<%@include file="/menu.jsp" %>
+		<header><h1>Submission Guidelines</h1></header>
+		<div class="below_header_div">
+			<p>We have selected a list of combinatorial optimization and machine learning 
+			<a style="text-decoration: none" href="<c:url value="/combinatorial-problem/all" />">problems</a> for
+			which our repository has proposed algorithms and their performance.   You can use this 
+			<a style="text-decoration: none" href="<c:url value="/data-analytics" />">website</a>  as a tool to analyze the strengths and weaknesses of these algorithms in
+			instance space, compare the performance of your devised algorithm with other solutions for
+			these problems or submit and analyze a solution for a new problem.</p>
+			
+			
+			
+			<h2>How to analyse the performance of an algorithms for a library problem</h2> 
+			<h3>Analyze already existing algorithms</h3>
+				<ol>
+					<li>Select a problem</li>
+					<li>Select algorithms to analyze</li>
+					<li>Select features to use/ upload features file for adding new features in your analysis 
+					(<a href="<c:url value="/resources/graphcsvs/features.csv" />">sample feature file</a>) </li>
+					<li><font color=red>Andres! Feature file format please !!!</font></li>
+					<li>Select objective function performance measurement criteria (minimize/maximize)</li>
+					<li>Provide parameter values for footprint generation or submit with the default values</li>
+				</ol>
+				<h3>Submit and Analyze a new algorithm</h3>
+				<ol>
+					<li>Download benchmark datasets available in our repository for a particular problem.</li>
+					<li>Run your algorithm on full/ subset of dataset and record its performance in a csv file with the
+					following format (<a href="<c:url value="/resources/graphcsvs/performance.csv" />">sample performance file</a>) </li>
+					<li>You can submit more than one algorithms by separating their performance by commas</li>
+					<li>First row should mention the names of the algorithm/s </li>
+					<li>Select algorithms with which you want to compare the performance of submitted algorithm</li>
+					<li>Select features to use/ upload features file for adding new features in your analysis </li>
+					<li>Select objective function performance measurement criteria (minimize/maximize)</li>
+					<li>Provide parameter values for footprint generation or submit with the default values</li>
+				</ol>
+			<h2>How to analyze the performance of an algorithms for a custom problem</h2>
+			<p>For any problem that is not part of our library, you can submit one or more solutions and compared
+			their performance in instance space.</p> 
+			<ol>
+				<li><font color=red>Dataset???</font></li>
+				<li>Upload the performance csv of your algorithm/s using format mentioned above.</li>
+				<li>Upload the features csv containing a list of features you want to use in your analysis.</li> 
+				<li>Select objective function performance measurement criteria (minimize/maximize)</li>
+				<li>Provide parameter values for footprint generation or submit with the default values</li>
+			</ol>
+		</div>
+        <%@include file="/footer.jsp" %>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

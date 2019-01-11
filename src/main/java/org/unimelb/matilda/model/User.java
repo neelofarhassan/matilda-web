@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
  
 @Entity
@@ -46,6 +47,7 @@ public class User implements Serializable{
     private String lastName;
  
     @NotEmpty
+    @Email
     @Column(name="EMAIL", nullable=false)
     private String email;
     
@@ -60,6 +62,8 @@ public class User implements Serializable{
     @NotEmpty
     @Column(name="research", nullable=true)
     private String researchDescription;
+    
+    private String captchaError;
     
     @NotEmpty
     @ManyToMany(fetch = FetchType.LAZY)
@@ -150,6 +154,15 @@ public class User implements Serializable{
 
 	public void setResearchDescription(String researchDescription) {
 		this.researchDescription = researchDescription;
+	}
+
+	
+	public String getCaptchaError() {
+		return captchaError;
+	}
+
+	public void setCaptchaError(String captchaError) {
+		this.captchaError = captchaError;
 	}
 
 	@Override

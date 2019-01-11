@@ -15,7 +15,7 @@ public interface UserService {
     
     void updateUser(User user);
     
-    void updateUserStatus(User user);
+    User updateUserStatus(User user);
      
     void deleteUserBySSO(String sso);
     

@@ -10,7 +10,14 @@ private String optimizationCriteria;
 private String performanceCriteria;
 private Double performanceThreshold = 0.05;
 private MultipartFile performanceFile;
+private String performanceMetricLabel;
 
+public String getPerformanceMetricLabel() {
+	return performanceMetricLabel;
+}
+public void setPerformanceMetricLabel(String performanceMetricLabel) {
+	this.performanceMetricLabel = performanceMetricLabel;
+}
 public MultipartFile getPerformanceFile() {
 	return performanceFile;
 }

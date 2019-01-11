@@ -14,163 +14,29 @@
   <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/heatmap.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
-
 <script type="text/javascript">
-$(document).ready(function() { 
-	modificationTime=0;
-	lineNumber=1;
-	methodCalls=0;
-	showExecutionLogs('neelofar', 'gcp', modificationTime, lineNumber, '', methodCalls);
-
-//  // JQuery function to process the csv data
- $.get('<c:url value="/resources/graphcsvs/coordinates.csv" />', function(data) {
-     // Split the lines
-     var lines = data.split('\n');
-     var series_data = new Array();
-     var x_label, ylabel;
-     $.each(lines, function(lineNo, line) {
-    	 if(lineNo == 0){
-    		 var items = line.split(',');
-    		 $.each(items, function(itemNo, item){
-    			 if(itemNo == 0){
-    				 x_label= item;
-    			 }else{
-    				 y_label = item;
-    			 }
-    		 });
-    	 }else{
-	         var items = line.split(',');
-	         var items_subarray = new Array();
-	      	 $.each(items, function(itemNo, item) {
-	      		items_subarray.push(parseFloat(item));
-	  		});
-// 	      	 console.log(items_subarray);
-	      	series_data.push(items_subarray);
-		}
-     });
-
-   var chart = {
-      type: 'scatter',
-      zoomType: 'xy'
-   };
-
-   var title = {
-      text: 'Title ???'   
-   };
-   var subtitle = {
-      text: ''  
-   };
-   var xAxis = {
-      title: {
-         enabled: true,
-         text: x_label
-      },
-      startOnTick: true,
-      endOnTick: true,
-      showLastLabel: true
-   };
-   var yAxis = {
-      title: {
-         text: y_label
-      }
-   };
-   var legend = {   
-      layout: 'vertical',
-      align: 'left',
-      verticalAlign: 'top',
-      x: 100,
-      y: 100,
-      floating: true,
-      backgroundColor: (
-         Highcharts.theme && Highcharts.theme.legendBackgroundColor) ||
-         '#FFFFFF',
-      borderWidth: 1
-   }  
-   var plotOptions = {
-      scatter: {
-         marker: {
-            radius: 5,
-            states: {
-               hover: {
-                  enabled: true,
-                  lineColor: 'rgb(100,100,100)'
-               }
-            }
-         },
-         states: {
-            hover: {
-               marker: {
-                  enabled: false
-               }
-            }
-         },
-         tooltip: {
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '{point.x}, {point.y}'
-         }
-      }
-   };
-   
-   var series = [
-      {
-         name: 'series name?',
-         color: 'rgba(223, 83, 83, .5)',
-         data: series_data
-      }
-   ];     
-
-   var json = {};   
-   json.chart = chart; 
-   json.title = title;   
-   json.subtitle = subtitle; 
-   json.legend = legend;
-   json.xAxis = xAxis;
-   json.yAxis = yAxis;  
-   json.series = series;
-   json.plotOptions = plotOptions;
-   $('#container').highcharts(json);
- });   
-   
-});
-function showExecutionLogs(user, problem, modificationTime, lineNumber, logContents, methodCalls){
-	var endOfFile = "";
-	$.ajax({
-		type: "get",
-		url: "<c:url value="/readMatlabLogFileRecursively" />",
-		data: {userName:'neelofar', problemName:'gcp', lastModified:modificationTime, lastLineRead:lineNumber},
-		success: function(data){
-			$.each(data, function(k,v){
-				if(k == 'true'){
-				console.log('inside true')
-				endOfFile = v[0];
-				lineNumber=v[1];
-				currentLogContents = v[2];
-				modificationTime=v[3];
-				logContents = logContents + currentLogContents;
-				console.log('method calls: ' + methodCalls + ', last read line: ' + lineNumber + ', modification time: ' + modificationTime + ', end of file: ' + endOfFile);
-				}
-			});
-			logContents = '<p>' + logContents + '</p>';
-			$('#logs').html(logContents);
-			if(endOfFile != 'true'){
-				methodCalls = parseInt(methodCalls) + 1;
-				 setTimeout(showExecutionLogs, 10000, user, problem, modificationTime, lineNumber, logContents, methodCalls);
-			}else{
-				return;
-			}
-		}
-	});
-}
+	var userName = "<%=request.getAttribute("userName") %>";
+	var problemName = "<%=request.getAttribute("problemName") %>"; 
+	var performanceMetricLabel = "<%=request.getAttribute("PerformanceMetricLabel") %>"; 
+	var logFileURL = "<c:url value="/readMatlabLogFileRecursively" />";
+	var performanceTableURL= "<c:url value="/readPerformanceTable" />";
+	var coordinatesPath = '<c:url value="/usersdata/" />' + userName + '/' + problemName + '/coordinates.csv';
+	var featuresPath = '<c:url value="/usersdata/" />' + userName + '/' + problemName + '/feature_process.csv';
+	var algosPath = '<c:url value="/usersdata/" />' + userName + '/' + problemName + '/algorithm_process.csv';
+	var jobCancellationURL = '<c:url value="/cancelUserJob/${jobId}/${problemName}" />';
+	console.log(userName + ':' + problemName);
+	var modificationTime=0;
+	var lineNumber=1;
+	var methodCalls=0;
+	
 </script>
-  
-  <style>
-  	#main_container {
-  	padding-top:50px;
-  	padding-bottom:50px;
-  	}
-  </style>
+<script type="text/javascript" src="<c:url value="/resources/scripts/matilda.js" /> "></script>
+<script type="text/javascript">
+showExecutionLogs(userName, problemName, modificationTime, lineNumber, '', methodCalls);
+</script>
 </head>
 <body>
 	
@@ -181,10 +47,44 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
       <div role="main">
       	<c:url var="home" value="/" />
 		<%@include file="/menu.jsp" %>
-			<div id="logs" style="overflow:scroll; height:600px; margin-left: 25%; margin-right: 25%; margin-top: 50px; margin-bottom: 50px;background-color: black; color: white;"></div>
-			<div id="container" style="width: 1000px; height: 700px; margin: 0 auto"></div>   
-
+		<header>
+			<h1>Footprint Analysis</h1> <br> <h2>${userFriendlyProblemName}</h2>
+		</header>
+		<div class="nextto_header">
+			<p>You can inspect the execution logs of your submitted solution in the window below. If you want to cancel the
+			execution at any time, please press X button. <br> <br>
 			
+			<font color="red">&#9888; Please be aware that the execution logs and other submitted files will be deleted by cancelling the execution. </font>
+			</p>
+		</div>
+		<div class="shell-wrap" id="execution_logs_container">
+  			<div class="shell-top-bar">
+  					<table id="log_header_table" class="log_header">
+  						<tr>
+  							<td  style="text-align: center;"><b>Execution Logs</b></td>
+  							<td style="text-align: right; color: red;"><a id="cancel_job" class="no_underline" href="">&times;</a></td>
+  						</tr>
+  					</table>
+  				</div>
+  				<div class="shell-body" id="logs"></div>
+			</div>
+		
+		<div id="error_container"></div>
+			<div id="graph_container">
+				<div id="graph_body" style="width: 800px; height: 800px; margin: 0 auto"></div>
+				<div>
+					<form>
+						<div id='features' class="twocolumnform_firstcolumn"></div>
+					
+					</form>
+				</div>
+			</div>
+			
+			<div id="table_container" style="margin-bottom: 100px;"></div>   
+			
+
+
+
 			
 <%-- 			<img alt="graph" src="<c:url value="/userimages/footprint_maxis_colours.png" />"> --%>
 <%-- 			<img alt="graph" src="<c:url value="/resources/images/andres.jpg" />"> --%>

@@ -20,7 +20,7 @@ import org.unimelb.matilda.service.UserService;
 
 /**
  * @author Neelofar
- * This class is not currently in use in this project. Added just for reference purpose. Must be removed before production
+ * 
  *
  */
 @Component
@@ -72,7 +72,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         		logger.error("Could not retrieve username from principal.");
         	}
         }
-        
+        String lastURL = request.getHeader("Referer");
+        System.out.println(lastURL);
         return url;
     }
  

@@ -9,7 +9,7 @@
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <title> Matilda </title>
   <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css">
-  <link rel="stylesheet" href="/resources/css/matilda.css">
+  <link rel="stylesheet" href="<c:url value="/resources/css/matilda.css" /> ">
   <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
   <style>
   	#main_container {

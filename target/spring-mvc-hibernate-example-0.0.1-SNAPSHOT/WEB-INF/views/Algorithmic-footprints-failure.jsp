@@ -27,9 +27,7 @@
       <div role="main">
       	<c:url var="home" value="/" />
 		<%@include file="/menu.jsp" %>
-			${error}
-	
-
+			<p><font color="red">${error}</font></p>
         <%@include file="/footer.jsp" %>
       </div>
     </div>

@@ -14,9 +14,6 @@
 <script>
 jQuery(document).ready(function(){
 // run on DOM ready
-// grab target from URL hash (i.e. www.example.com/page-a.html#target-name)
- 
-//var target = window.location.hash;
 var target = "<%= request.getAttribute("anchor")%>"
 if(!target.length){
 	target = '#combinatorial_problem';
@@ -59,7 +56,7 @@ img{
 		<h1 id="all">Combinatorial Optimization Problems</h1>
       	<div id="tsp">
 	       <h2 style="text-align: center">Travelling Salesman Problem</h2>
-	    	<p><img src="${home}resources/images/tsp.jpeg" alt="TSP" align="right" width="200" height="200" border="0" style="Margin:0 0 20px 20px;">
+	    	<p><img src="${home}resources/images/tsp.jpeg" alt="TSP" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
 	        The traveling salesman problem (TSP) is an algorithmic problem tasked with finding the 
 	        shortest route between a set of points and locations that must be visited. In the problem 
 	        statement, the points are the cities a salesperson might visit. The salesman‘s goal is to 
@@ -69,14 +66,19 @@ img{
 	        for data to travel between various nodes. Applications include identifying network or 
 	        hardware optimization methods.</p>
 	        <h2>Downloads</h2>
-	        <ol><li><a href="http://users.monash.edu.au/~ksmiles/matilda/graphs.zip">Evolved graphs </a> from Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", Computers & Operations Research, vol. 63, pp. 102-113, 2015.</li>
-				<li><a href="http://users.monash.edu.au/~ksmiles/matilda/tsp.zip">Evolved TSP </a> instances from Smith-Miles, K. and van Hemert, J. Discovering the suitability of optimisation algorithms by learning from evolved instances, Ann Math Artif Intell, pp. 61-87, 2011.</li>
-			</ol>	
+	        
+				<p>Datasets &nbsp;&nbsp;&nbsp;&nbsp; Algorithms &nbsp;&nbsp;&nbsp;&nbsp; Features</p>
+				
+	        
+	        
+<!-- 	        <ol><li><a href="http://users.monash.edu.au/~ksmiles/matilda/graphs.zip">Evolved graphs </a> from Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", Computers & Operations Research, vol. 63, pp. 102-113, 2015.</li> -->
+<!-- 				<li><a href="http://users.monash.edu.au/~ksmiles/matilda/tsp.zip">Evolved TSP </a> instances from Smith-Miles, K. and van Hemert, J. Discovering the suitability of optimisation algorithms by learning from evolved instances, Ann Math Artif Intell, pp. 61-87, 2011.</li> -->
+<!-- 			</ol>	 -->
 		</div>
 		
 		<div id="graphcoloring">
 	       <h2 style="text-align: center">Graph Coloring Problem</h2>
-	    	<p><img src="${home}resources/images/graphcoloring.png" alt="graph coloring" align="right" width="200" height="200" border="0" style="Margin:0 0 20px 20px;">
+	    	<p><img src="${home}resources/images/graphcoloring.png" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
 	        In graph theory, graph coloring is a special case of graph labeling; it is an assignment 
 	        of labels traditionally called "colors" to elements of a graph subject to certain 
 	        constraints. In its simplest form, it is a way of coloring the vertices of a graph 
@@ -93,14 +95,14 @@ img{
 			often stated and studied as is. That is partly for perspective, and partly because 
 			some problems are best studied in non-vertex form, as for instance is edge coloring.</p>
 	        <h2>Downloads</h2>
-	        <ol><li><a href="http://users.monash.edu.au/~ksmiles/matilda/graphs.zip">Evolved graphs </a> from Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", Computers & Operations Research, vol. 63, pp. 102-113, 2015.</li>
-				<li><a href="http://users.monash.edu.au/~ksmiles/matilda/tsp.zip">Evolved TSP </a> instances from Smith-Miles, K. and van Hemert, J. Discovering the suitability of optimisation algorithms by learning from evolved instances, Ann Math Artif Intell, pp. 61-87, 2011.</li>
-			</ol>	
+<!-- 	        <ol><li><a href="http://users.monash.edu.au/~ksmiles/matilda/graphs.zip">Evolved graphs </a> from Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", Computers & Operations Research, vol. 63, pp. 102-113, 2015.</li> -->
+<!-- 				<li><a href="http://users.monash.edu.au/~ksmiles/matilda/tsp.zip">Evolved TSP </a> instances from Smith-Miles, K. and van Hemert, J. Discovering the suitability of optimisation algorithms by learning from evolved instances, Ann Math Artif Intell, pp. 61-87, 2011.</li> -->
+<!-- 			</ol>	 -->
 		</div>
 		
 		<div id="knapsack">
 	       <h2 style="text-align: center">Knapsack Problem</h2>
-	    	<p><img src="${home}resources/images/knapsack.png" alt="graph coloring" align="right" width="200" height="200" border="0" style="Margin:0 0 20px 20px;">
+	    	<p><img src="${home}resources/images/knapsack.png" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
 	        The knapsack problem or rucksack problem is a problem in combinatorial optimization: 
 	        Given a set of items, each with a weight and a value, determine the number of each item 
 	        to include in a collection so that the total weight is less than or equal to a given 
@@ -122,6 +124,47 @@ img{
 			</ol>	
 		</div>
 		
+		<div id="linearprogramming">
+	       <h2 style="text-align: center">Linear Programming</h2>
+	    	<p><img src="${home}resources/images/linear-programming.png" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
+	        Linear programming is the process of taking various linear inequalities relating to some situation, 
+	        and finding the "best" value obtainable under those conditions. A typical example would be taking 
+	        the limitations of materials and labor, and then determining the "best" production 
+	        levels for maximal profits under those conditions.</p>
+
+			<p>Applications of linear programming are every where around you. You use linear programming at 
+			personal and professional fronts. You are using linear programming when you are driving from home 
+			to work and want to take the shortest route. Or when you have a project delivery you make strategies 
+			to make your team work efficiently for on time delivery.</p>
+
+			<h2>Downloads</h2>
+	        <ol><li><a href="http://users.monash.edu.au/~ksmiles/matilda/graphs.zip">Evolved graphs </a> from Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", Computers & Operations Research, vol. 63, pp. 102-113, 2015.</li>
+				<li><a href="http://users.monash.edu.au/~ksmiles/matilda/tsp.zip">Evolved TSP </a> instances from Smith-Miles, K. and van Hemert, J. Discovering the suitability of optimisation algorithms by learning from evolved instances, Ann Math Artif Intell, pp. 61-87, 2011.</li>
+			</ol>	
+		</div>
+		
+		<div id="integerprogramming">
+	       <h2 style="text-align: center">Mixed Integer Programming</h2>
+	    	<p><img src="${home}resources/images/mixed-programming.jpeg" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
+	        An integer programming problem is a mathematical optimization or feasibility program in 
+	        which some or all of the variables are restricted to be integers. In many settings the term 
+	        refers to integer linear programming (ILP), in which the objective function and the 
+	        constraints (other than the integer constraints) are linear.</p>
+
+			<p>If some decision variables are not discrete the problem is known as a <i>mixed-integer programming problem.</i></p>
+			<p>There are two main reasons for using integer variables when modeling problems as a linear program:</p>
+			<ul>
+				<li>The integer variables represent quantities that can only be integer. For example, it is not possible to build 3.7 cars.</li>
+				<li>The integer variables represent decisions and so should only take on the value 0 or 1.</li>
+			</ul>
+			<p>These considerations occur frequently in practice and so integer linear programming can be used in many applications areas, such as
+			production planning, scheduling, telecommunication networks etc. </p>
+
+			<h2>Downloads</h2>
+	        <ol><li><a href="http://users.monash.edu.au/~ksmiles/matilda/graphs.zip">Evolved graphs </a> from Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", Computers & Operations Research, vol. 63, pp. 102-113, 2015.</li>
+				<li><a href="http://users.monash.edu.au/~ksmiles/matilda/tsp.zip">Evolved TSP </a> instances from Smith-Miles, K. and van Hemert, J. Discovering the suitability of optimisation algorithms by learning from evolved instances, Ann Math Artif Intell, pp. 61-87, 2011.</li>
+			</ol>	
+		</div>
       </div>
     </div>
   </div>

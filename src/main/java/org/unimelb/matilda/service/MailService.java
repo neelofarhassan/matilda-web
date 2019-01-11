@@ -7,4 +7,5 @@ public interface MailService {
 	public void sendRegistrationEmail(User user);
 	public void sendFeedbackEmail(UserFeedback feedback);
 //	public void emailUserFeedback(UserFeedback userFeedback);
+	public void sendRegistrationApprovalEmail(User user);
 }

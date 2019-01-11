@@ -28,7 +28,7 @@
 			<h3><p>Dear ${username}, You have registered successfully.</p></h3>
 			 <p>Once approved, we will notify you via email to your registered email address.
 			 Registration approval can take 
-			 up to a week. Please note, you don't need to login to <a href="#">download</a> from our 
+			 up to a week. <br><br>Please note, you don't need to login to <a href="#">download</a> from our 
 			 repository.</p>
          
         <%@include file="/footer.jsp" %>

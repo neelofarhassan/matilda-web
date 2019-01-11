@@ -18,58 +18,7 @@
 <link href="<c:url value='/resources/css/app.css' />" rel="stylesheet"></link>
 <link href="<c:url value='/resources/css/matilda.css' />" rel="stylesheet"></link>
 <script src="https://www.google.com/recaptcha/api.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('[data-toggle="tooltip"]').tooltip();
-	});
-</script>
-<style>
-.popup-overlay {
-	/*Hides pop-up when there is no "active" class*/
-	visibility: hidden;
-	position: absolute;
-	background: #ffffff;
-	border: 3px solid #666666;
-	width: 50%;
-	height: 200px;
-	left: 25%;
-}
-
-.popup-overlay.active {
-	visibility: visible;
-	text-align: center;
-}
-
-.popup-content {
-	visibility: hidden;
-}
-
-.popup-content.active {
-	visibility: visible;
-}
-
-button {
-	display: inline-block;
-	vertical-align: middle;
-	border-radius: 30px;
-	margin: .20rem;
-	font-size: 1rem;
-	color: #666666;
-	background: #ffffff;
-	border: 1px solid #666666;
-}
-
-button:hover {
-	border: 1px solid #666666;
-	background: #666666;
-	color: #ffffff;
-}
-
-#main_container {
-	padding-top: 50px;
-	padding-bottom: 50px;
-}
-</style>
+<script type="text/javascript" src="<c:url value="/resources/scripts/matilda.js" /> "></script>
 </head>
 <body>
 
@@ -148,24 +97,26 @@ button:hover {
 						</div>
 						<div>
 							<label for="affiliation" data-required="true">Institution/Company</label>
-							<form:input type="text" path="affiliation" id="affiliation"
-								aria-required="true" />
+							<form:input type="text" path="affiliation" id="affiliation" aria-required="true" />
+							<div class="has-error"> 
+								<form:errors path="affiliation" />
+							</div>
 						</div>
 
 						<div>
-<!-- 							<label for="research_description" data-required="true">Short -->
-<!-- 								Research Description</label> <a href="#" data-toggle="tooltip" style="text-decoration:none" -->
-<!-- 								title="hello hello hello hello hello hello hello hello hello hellohello hello hello hello hellohello hello hello hello hellohello hello hello hello hello">Why -->
-<!-- 								do we need it?</a>  -->
-								<label><span class="tooltip">Short Research Description<span class="tooltiptext">Please provide a brief description of how do you want to interact with 
+							<label><span class="tooltip">Short Research Description<img src="<c:url value="resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Please provide a brief description of how do you want to interact with 
 								our repository? This will help us to give access to only legitimate researchers to our repository who doesn't breach the security and
-								contribute quality data. </span></span></label>
-							<form:textarea path="researchDescription"
-								id="research_description" aria-required="true" />
+								contribute quality data.</span></span></label>
+							<form:textarea path="researchDescription" id="research_description" aria-required="true" />
+							<div class="has-error"> 
+								<form:errors path="researchDescription" />
+							</div>
 						</div>
 							
-							<div class="g-recaptcha"
-			data-sitekey="6Ldso3kUAAAAAJiQwokosrghpu_t5UJjuiYcWbVF"></div>
+							<div class="g-recaptcha" data-sitekey="6Ldso3kUAAAAAJiQwokosrghpu_t5UJjuiYcWbVF"></div>
+							<div class="has-error">
+								<form:errors path="captchaError" />
+							</div>
 							
 						<form:hidden path="status" id="status" value="waiting" />
 						<form:hidden path="userProfiles" id="userProfiles" value="1" />

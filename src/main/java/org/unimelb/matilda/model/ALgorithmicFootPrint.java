@@ -17,6 +17,8 @@ private List<String> selectedAlgorithms = new ArrayList<>();
 private List<String> selectedFeatures = new ArrayList<>();
 private MultipartFile performanceFile;
 private MultipartFile featureFile;
+private MultipartFile customPerformanceFile;
+private MultipartFile customFeatureFile;
 private Boolean addNewAlgorithm;
 private Boolean addNewFeature;
 private Double betaThreshold = 0.5;
@@ -40,7 +42,18 @@ private Double maxFunEvals = Math.exp(4);
 private Boolean parallelEval = false;
 private Boolean DispFinal = false;
 
-
+public MultipartFile getCustomPerformanceFile() {
+	return customPerformanceFile;
+}
+public void setCustomPerformanceFile(MultipartFile customPerformanceFile) {
+	this.customPerformanceFile = customPerformanceFile;
+}
+public MultipartFile getCustomFeatureFile() {
+	return customFeatureFile;
+}
+public void setCustomFeatureFile(MultipartFile customFeatureFile) {
+	this.customFeatureFile = customFeatureFile;
+}
 public Boolean getAddNewAlgorithm() {
 	return addNewAlgorithm;
 }

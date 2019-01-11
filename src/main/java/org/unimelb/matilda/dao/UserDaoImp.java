@@ -51,14 +51,26 @@ public class UserDaoImp extends AbstractDao<Integer, User> implements UserDao {
         return users;
     }
  
+    @SuppressWarnings("unchecked")
+	public List<User> findUsersByStatus(String status){
+    	Criteria criteria = createEntityCriteria();
+    	criteria.add(Restrictions.eq("status", status));
+    	List<User> users = (List<User>)criteria.list();
+    	return users;
+    }
+    
     public void save(User user) {
         persist(user);
     }
     
-    public void update(User user) {
+    public void updateEntity(User user) {
     	update(user);
     }
  
+    public User UpdateUserStatus(User user) {
+    	User updatedUser = (User) merge(user);
+    	return updatedUser;
+    }
     public void deleteBySSO(String sso) {
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("ssoId", sso));

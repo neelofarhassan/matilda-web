@@ -1,0 +1,89 @@
+path returned: 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2018 The MathWorks, Inc.
+                   R2018b (9.5.0.944444) 64-bit (glnxa64)
+                              August 28, 2018
+
+ 
+For online documentation, see https://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Default options returned (type "help cmaes" for help).
+       10000
+
+EOF
+{Error using diary
+/matilda_logs.txt: File not found.
+
+Error in matilda (line 5)
+diary(diarypath);
+
+Error in example (line 58)
+out = matilda(user_directory, opts);
+} 
+>> 
+--------------------------------------------------------------------------------
+       Segmentation violation detected at Tue Dec 04 16:03:49 2018 +1100
+--------------------------------------------------------------------------------
+
+Configuration:
+  Crash Decoding           : Disabled - No sandbox or build area path
+  Crash Mode               : continue (default)
+  Default Encoding         : UTF-8
+  Deployed                 : false
+  Desktop Environment      : ubuntu:GNOME
+  GNU C Library            : 2.27 stable
+  Graphics Driver          : Unknown software 
+  MATLAB Architecture      : glnxa64
+  MATLAB Entitlement ID    : 856677
+  MATLAB Root              : /usr/local/MATLAB/R2018b
+  MATLAB Version           : 9.5.0.944444 (R2018b)
+  OpenGL                   : hardware
+  Operating System         : Ubuntu 18.04.1 LTS
+  Process ID               : 27326
+  Processor ID             : x86 Family 6 Model 142 Stepping 10, GenuineIntel
+  Session Key              : f9a46983-f9cf-4bc8-93e7-dc362248c82e
+  Static TLS mitigation    : Enabled: Full
+  Window System            : The X.Org Foundation (11906000), display :0
+
+Fault Count: 1
+
+
+Abnormal termination
+
+Register State (from fault):
+  RAX = 000000000000000b  RBX = 00007fe702b8e760
+  RCX = 787564642e62616c  RDX = 00007fe702b8e760
+  RSP = 00007fe702b8e430  RBP = 00007fe702b8e460
+  RSI = 0000000000000000  RDI = 00007fe702b8e430
+
+   R8 = 0000000000000000   R9 = 0000000000000000
+  R10 = 00000000000000e6  R11 = 00007fe72d6d55d0
+  R12 = 00007fe702b8e530  R13 = 00007fe702b8eec0
+  R14 = 00007fe702b8e530  R15 = 00007fe6fc115f38
+
+  RIP = 00007fe7254c5a22  EFL = 0000000000010206
+
+   CS = 0033   FS = 0000   GS = 0000
+
+Stack Trace (from fault):
+[  0] 0x00007fe7254c5a22                   bin/glnxa64/libmwsettingscore.so+00973346 _ZNK8settings4core8Settings21getSettingsByFullNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE+00000018
+[  1] 0x00007fe708bc61e5          bin/glnxa64/ddux/ddux_impl/mwddux_impl.so+00725477
+[  2] 0x00007fe708b960fb          bin/glnxa64/ddux/ddux_impl/mwddux_impl.so+00528635
+[  3] 0x00007fe708b7f500          bin/glnxa64/ddux/ddux_impl/mwddux_impl.so+00435456
+[  4] 0x00007fe708b8beca          bin/glnxa64/ddux/ddux_impl/mwddux_impl.so+00487114
+[  5] 0x00007fe708b85eaa          bin/glnxa64/ddux/ddux_impl/mwddux_impl.so+00462506
+[  6] 0x00007fe72a153e75                             bin/glnxa64/libmwms.so+02625141
+[  7] 0x00007fe708b85b06          bin/glnxa64/ddux/ddux_impl/mwddux_impl.so+00461574
+[  8] 0x00007fe72b421c0d /usr/local/MATLAB/R2018b/bin/glnxa64/libmwboost_thread.so.1.65.1+00080909
+[  9] 0x00007fe72a3fa6db              /lib/x86_64-linux-gnu/libpthread.so.0+00030427
+[ 10] 0x00007fe72bd7888f                    /lib/x86_64-linux-gnu/libc.so.6+01185935 clone+00000063
+[ 11] 0x0000000000000000                                   <unknown-module>+00000000
+
+** This crash report has been saved to disk as /home/unimelb.edu.au/nneelofar/matlab_crash_dump.27326-1 **
+
+
+
+MATLAB is exiting because of fatal error
+/var/lib/slurm-llnl/slurmd/job00007/slurm_script: line 4: 27326 Killed                  /usr/local/bin/matlab -nodesktop -nosplash -nojvm -r "try; example('$1'); catch ME; rethrow(ME); end; exit;"

@@ -92,7 +92,7 @@
 			      <a href="/another">Data Analytics</a>
 			      <div class="inner"> 
 			      	<ul>
-			      		<li><a href="">Submission Guidelines</a></li>
+			      		<li><a href="<c:url value="/submission-guidelines" />">Submission Guidelines</a></li>
 			      		<li><a href="<c:url value="/submit" />">Submit Data</a></li>
 			      		<li><a href="<c:url value="/data-analytics" />">Instance Space Analysis</a></li>
 			      	</ul>
