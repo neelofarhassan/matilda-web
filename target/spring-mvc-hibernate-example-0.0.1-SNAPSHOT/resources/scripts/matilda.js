@@ -162,7 +162,7 @@ $(document).ready(function() {
     	 		}
     	 	});
     	 	
-    	 			$('#foorprint_form').submit(function(){
+    	 				$('#footprint_submit').click(function(){
     	 				 valid = true;
     	 				 problem_type = $('input[name="problem.libraryProblem"]:checked').val();
     	 				 if(problem_type == 'true'){
@@ -191,7 +191,8 @@ $(document).ready(function() {
     	 					 }
     	 				 }else{
     	 					 if($('#problem_name').val() == ''){
-    	 						$('#problem_name_error').html('Please specify the name of the problem. ')	 
+    	 						$('#problem_name_error').html('Please specify the name of the problem. ');
+    	 						valid = false;
     	 					 }else{
     	 						 var validName = new RegExp('^[a-zA-Z0-9-\\s]+$');
     	 						 if(validName.test($('#problem_name').val())){
@@ -199,6 +200,7 @@ $(document).ready(function() {
     	 						}else{
     	 							console.log('error in problem name');
     	 							$('#problem_name_error').html('Only letters, numbers, hyphen and spaces are allowed.');
+    	 							valid = false;
     	 						}
     	 					 }
     	 					 
@@ -249,7 +251,18 @@ $(document).ready(function() {
     	 				 }else{
     	 					$('#performance_metric_label_error').html('');
     	 				 }
-	 				    return valid;
+    	 				 if(valid){
+    	 					 console.log('before submit');
+    	 					 $('#foorprint_form').submit();
+    	 					 console.log('after submit');
+    	 					 $('#footprint_form_container').css({opacity: 0.5});
+     	 					 $("#foorprint_form :input").prop("disabled", true);
+    	 						$('#loader').removeClass('hidden_div').addClass('display_div');
+//    	 						$('#loader').scrollTop($('#loader').height());
+    	 						var position = $("#footprint_form_container").position();
+    	 						 $('html,body').animate({scrollTop: position.top},'slow');
+    	 					
+    	 				 }
     	 			});
     	 			
     	 				$("#advanced_settings_link").click(function() {
@@ -299,6 +312,8 @@ function reset_library_problem_settings(){
 function showExecutionLogs(user, problem, modificationTime, lineNumber, logContents, methodCalls){
 	var endOfFile = "";
 	var scriptSuccess = "";
+	var $logsdiv = $("#logs");
+	var height;
 	$.ajax({
 		type: "get",
 //		url: "<c:url value="/readMatlabLogFileRecursively" />",
@@ -326,7 +341,6 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 			waitingDiv = '<div class="progress"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'; 
 			
 			$('#logs').html(logContents);
-			var $logsdiv = $("#execution_logs_container");
 			$logsdiv.scrollTop($logsdiv.height());
 			if(endOfFile != 'true' && scriptSuccess != 'false'){
 				if(methodCalls > 0){
@@ -336,12 +350,17 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 				methodCalls = parseInt(methodCalls) + 1;
 				 setTimeout(showExecutionLogs, 10000, user, problem, modificationTime, lineNumber, logContents, methodCalls);
 			}else{
+				
 // 				$('#close-execution').addClass('hidden_div');
+				$logsdiv.scrollTop($logsdiv.height());
+				$('html, body').animate({scrollTop: height}, 'slow');
 				hideExecutionCancellationButton();
 				if(scriptSuccess == 'false'){
 					$('#error_container').html('<p><font color="red"><h2>An error occured !!! </h2></font><br><br>Please see log window for details.</p> ');
 				}else{
 					showPerformanceTable(user, problem);
+					$('#graph_body').removeClass('hidden_div').addClass('display_div');
+					$('#table_container').removeClass('hidden_div').addClass('display_div');
 					showDemoGraph(user, problem, 'feature_1');
 				}
 			}

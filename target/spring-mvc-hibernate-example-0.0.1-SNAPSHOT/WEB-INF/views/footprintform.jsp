@@ -32,17 +32,24 @@
 	  <%@include file="authheader.jsp" %>
       <div role="main">
 		<%@include file="/menu.jsp" %>
+		<div>
 			<header>
                 <h1>Algorithm Analysis</h1>
-        </header>
+        	</header>
+        
+        </div>
+       
         <section>
-        <div>
-	        <p>Visualize the strength and weakness of your solution through instance space. <a href="<c:url value="/submission-guidelines" />">Submission Guidelines</a>
-	        give you detailed description of how to submit your data for analysis.</p>
+        
+        <div id="footprint_form_container">
+       <div id="loader" class="hidden_div"></div>
+	        <p>Visualize the strengths and weaknesses of algorithms across instance space. <a href="<c:url value="/submission-guidelines" />">Submission Guidelines</a>
+	        provide a detailed description of how to submit your data for analysis.</p>
 			<c:url var="action" value="/generate-footprint" />
 			<form:form id="foorprint_form" action="${action}" commandName="algorithmParams" method="POST" enctype="multipart/form-data" >
 					<a id="page_start_anchor"></a>
 					<div style="margin-bottom: 20px;">
+					 
  						<h2>What problem do you want to analyze?</h2>
  						
 						<form:radiobuttons name="libraryProblem" path="problem.libraryProblem"   items="${problemTypes}" element="br" />
@@ -121,7 +128,7 @@
 						  	<div class="twocolumnform_firstcolumn">
 								<label for="optimization_criteria" data-required="true"> <strong>Optimization Criteria</strong><span class="tooltip"><img src="<c:url value="resources/images/info.png" />" width="20" height="20" >
  								<span class="tooltiptext">Select whether your performance measure is cost to be minimized or utility to be maximized. </span></span></label>
-								
+<!-- 								select if the good performance is independent of algorithm results i.e. in absolute terms considering non-optimal solutions. or, in relative terms compared to other algorithms. -->
 								<div>
 									<form:select id="optimization_criteria" path="algorithm.optimizationCriteria">
 										<form:option selected="selected" value="" label="Select Optimization Criteria"  />
@@ -308,9 +315,6 @@
 								<form:input path="higherDistanceThreshold" style="width:100%"/>
 							</div>
 							
-
-
-							
 							<div class="twocolumnform_firstcolumn">
 								<label><span class="tooltip">Stopping Criteria<span class="tooltiptext">Stop if the fitness is <i>n</i> </span></span></label>
 								<form:input path="stoppingCriteria" style="width:100%"/>
@@ -329,10 +333,12 @@
 						</fieldset>
 					</div>
 					<div id="submit_div" class="twocolumnform_firstcolumn hidden_div">
-						<button type="submit" class="button cta">Submit</button>
+						<button id="footprint_submit" type="submit" class="button cta">Submit</button>
 					</div>
 			</form:form>
+			
 			</div>
+			 
 		</section>
         <%@include file="/footer.jsp" %>
       </div>

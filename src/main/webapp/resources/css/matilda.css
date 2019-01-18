@@ -330,13 +330,8 @@ ul.verticalRadios {
 }
 .shell-wrap {
   width: 800px;
-/* 	margin-left: 25%;  */
-/* 	margin-right: 25%;  */
-/* 	margin-top: 20px;  */
-/*   margin-bottom: 100px;  */
   margin: 50px auto 100px auto;
   box-shadow: 0 0 30px rgba(0,0,0,0.4);
-
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -423,6 +418,10 @@ ul.verticalRadios {
 	margin: 0 !important;
 	}
 	
+ .full_width_table{
+	width: 100%;
+	}
+
 #users_list{
 	border-collapse: collapse;
   width: 100%;
@@ -455,4 +454,77 @@ ul.verticalRadios {
 #error_container{
 	text-align: center;
 	font-weight: bold;
+}
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+#loader {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+#loader{
+	position: absolute;
+	top: 25%;
+}
+.graph_body{
+	width: 800px; 
+	height: 850px; 
+	margin-top: 50px;
+}
+.highcharts_graphcontainer{
+	width: 800px; 
+	height: 850px; 
+	margin-top: 50px;
+}
+.table_container{
+	width: 800px; 
+	margin-bottom: 100px; 
+}
+#main_container{
+	text-align: center;
+}
+#download_all{
+	float: right;
 }

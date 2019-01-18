@@ -27,13 +27,16 @@
 		<table id="users_list">
         	        <thead>
                     <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
-                        <th>SSO ID</th>
-                        <th>Affiliation</th>
-                        <th>Research Description</th>
-                        <th>Status</th>
+                        <th><h2>First Name</h2></th>
+                        <th><h2>Last Name</h2></th>
+                        <th><h2>Email</h2></th>
+                        <th><h2>SSO ID</h2></th>
+                        <th><h2>Affiliation</h2></th>
+                        <th><h2>Research Description</h2></th>
+                        <th><h2>Status</h2></th>
+                        <th><h2>Edit</h2></th>
+                        <th><h2>Delete</h2></th>
+                        <th><h2>Approve</h2></th>
 <%--                         <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')"> --%>
 <!--                             <th width="100"></th> -->
 <%--                         </sec:authorize> --%>
@@ -54,9 +57,13 @@
                         <td>${user.researchDescription}</td>
                         <td>${user.status}</td>
                         <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-                        	<td><a href="<c:url value='/edit-user-${user.ssoId}' />" class="btn btn-success custom-width">Edit</a></td>
-                        	<td><a href="<c:url value='/delete-user-${user.ssoId}' />" class="btn btn-danger custom-width">Delete</a></td>
-                        	<td><a href="<c:url value='/approveuser-${user.ssoId}' />" class="btn btn-success custom-width">Approve</a></td>
+                        	<td><a href="<c:url value='/edit-user-${user.ssoId}' />" ><button class="button cta">Edit</button></a></td>
+                        	<td><a href="<c:url value='/delete-user-${user.ssoId}' />" ><button class="button cta">Delete</button></a></td>
+                        	
+                        		<td><a href="<c:url value='/approveuser-${user.ssoId}' />" >
+                        		<c:choose><c:when test="${user.status ne 'approved'}"><button class="button cta">Approve</button></c:when >
+                        		<c:otherwise><button class="button cta disabled">Approve</button> </c:otherwise></c:choose> </a></td>
+                        	
                         </sec:authorize>
 <%--                        <c:if test="${!userapproval}">  --%>
 <%--                         <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')"> --%>

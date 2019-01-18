@@ -94,7 +94,7 @@ public class MailServiceImpl implements MailService {
 
 	    String subject = "New Registration Request";
 	    String body = "A new registration request from Matilda is waiting for your approval. <br>" ;
-	    body += "<a href=\"http://localhost:8080/spring-mvc-hibernate-example/newuserslist\"> View Request</a>";
+	    body += "<a href=\"http://formula.its.unimelb.edu.au/matilda/newuserslist\"> View Request</a>";
 	    
 	    prepareAndSendEmail( adminEmail, subject, body);
 	}

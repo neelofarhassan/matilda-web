@@ -35,6 +35,7 @@
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/service/UserProfileService.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/config/SecurityConfiguration.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/model/UserProfileType.java
+/home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/config/CustomSuccessHandler2.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/service/UserService.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/service/DataSynchronizingServiceImpl.java
 /home/unimelb.edu.au/nneelofar/eclipse-workspace/spring-mvc-hibernate-example/src/main/java/org/unimelb/matilda/model/ALgorithmicFootPrint.java

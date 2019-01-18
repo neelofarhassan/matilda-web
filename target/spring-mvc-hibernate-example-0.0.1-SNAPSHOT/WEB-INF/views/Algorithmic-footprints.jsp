@@ -12,12 +12,12 @@
   <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css">
   <link rel="stylesheet" href="<c:url value="/resources/css/matilda.css" /> ">
   <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/heatmap.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
-<script type="text/javascript">
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="//code.highcharts.com/highcharts.js"></script>
+  <script src="//code.highcharts.com/modules/heatmap.js"></script>
+  <script src="//code.highcharts.com/modules/data.js"></script>
+  <script src="//code.highcharts.com/modules/exporting.js"></script>
+  <script type="text/javascript">
 	var userName = "<%=request.getAttribute("userName") %>";
 	var problemName = "<%=request.getAttribute("problemName") %>"; 
 	var performanceMetricLabel = "<%=request.getAttribute("PerformanceMetricLabel") %>"; 
@@ -52,17 +52,17 @@ showExecutionLogs(userName, problemName, modificationTime, lineNumber, '', metho
 		</header>
 		<div class="nextto_header">
 			<p>You can inspect the execution logs of your submitted solution in the window below. If you want to cancel the
-			execution at any time, please press X button. <br> <br>
+			execution at any time, please press 'close' button. <br> <br>
 			
 			<font color="red">&#9888; Please be aware that the execution logs and other submitted files will be deleted by cancelling the execution. </font>
 			</p>
 		</div>
 		<div class="shell-wrap" id="execution_logs_container">
   			<div class="shell-top-bar">
-  					<table id="log_header_table" class="log_header">
+  					<table id="log_header_table" class="log_header full_width_table">
   						<tr>
-  							<td  style="text-align: center;"><b>Execution Logs</b></td>
-  							<td style="text-align: right; color: red;"><a id="cancel_job" class="no_underline" href="">&times;</a></td>
+  							<td  style="text-align: left;"><h3>Execution Logs -- ${userFriendlyProblemName}</h3></td>
+  							<td style="text-align: right; color: red;"><a id="cancel_job" class="no_underline" href=""><button style="background-color: red;">Close</button></a></td>
   						</tr>
   					</table>
   				</div>
@@ -70,17 +70,19 @@ showExecutionLogs(userName, problemName, modificationTime, lineNumber, '', metho
 			</div>
 		
 		<div id="error_container"></div>
-			<div id="graph_container">
-				<div id="graph_body" style="width: 800px; height: 800px; margin: 0 auto"></div>
-				<div>
+			<div id="graph_container" style="border: 1px solid black; text-align: center;">
+			<h2>Instance Space: Distribution of selected features/algorithms</h2>
+				<div style="clear: both;">
 					<form>
 						<div id='features' class="twocolumnform_firstcolumn"></div>
 					
 					</form>
 				</div>
+				<div id="graph_body" style="width: 800px; height: 850px; margin: 0 auto" class="hidden_div"></div>
+
 			</div>
 			
-			<div id="table_container" style="margin-bottom: 100px;"></div>   
+			<div id="table_container" style="margin-bottom: 100px;" class="hidden_div"></div>   
 			
 
 

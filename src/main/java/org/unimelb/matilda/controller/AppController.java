@@ -17,6 +17,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -33,6 +34,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -285,8 +287,10 @@ public class AppController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(HttpServletRequest request) {
+    	String referrer = request.getHeader("Referer");
+    	HttpSession session = request.getSession();
         if (isCurrentAuthenticationAnonymous()) {
-        	String referrer = request.getHeader("Referer");
+//        	String referrer = request.getHeader("Referer");
         	System.out.println(referrer);
             return "login";
         } else {
@@ -328,8 +332,11 @@ public class AppController {
     }
     
     @RequestMapping(value="/data-analytics", method=RequestMethod.GET)
-    public String showFootprintGenerationForm(@ModelAttribute ALgorithmicFootPrint algorithm, Model model) {
+    public String showFootprintGenerationForm(@ModelAttribute ALgorithmicFootPrint algorithm, Model model, HttpServletRequest request) {
 //    	Algorithm algorithm = new Algorithm();
+    	if(isCurrentAuthenticationAnonymous()) {
+    		return "redirect:/login";
+    	}
     	model.addAttribute("algorithmParams", algorithm);
     	
     	
@@ -349,19 +356,19 @@ public class AppController {
     	model.addAttribute("mainProbmensLIst", mainProblemsList);
     	
     	HashMap<String, String> optimizationProblems = new HashMap<>();
-    	optimizationProblems.put("tsp", "Travelling Salesman Problem");
-    	optimizationProblems.put("gcp", "Graph Coloring Problem");
-    	optimizationProblems.put("ksp", "Knapsack Problem");
-    	optimizationProblems.put("lp", "Linear Programming");
-    	optimizationProblems.put("Mip", "Mixed Integer Programming");
-    	optimizationProblems.put("bb-single", "Black-Box Single Objective");
-    	optimizationProblems.put("bb-multi", "Black-Box Multi-Objective");
+    	optimizationProblems.put("Travelling Salesman Problem", "Travelling Salesman Problem");
+    	optimizationProblems.put("Graph Coloring Problem", "Graph Coloring Problem");
+    	optimizationProblems.put("Knapsack Problem", "Knapsack Problem");
+    	optimizationProblems.put("Linear Programming", "Linear Programming");
+    	optimizationProblems.put("Mixed Integer Programming", "Mixed Integer Programming");
+    	optimizationProblems.put("Black-Box Single Objective", "Black-Box Single Objective");
+    	optimizationProblems.put("Black-Box Multi-Objective", "Black-Box Multi-Objective");
     	
     	HashMap<String, String> modelLearning = new HashMap<>();
-    	modelLearning.put("regression", "Regression");
-    	modelLearning.put("classification", "Classification");
-    	modelLearning.put("anomaly", "Anomaly Detection");
-    	modelLearning.put("tsf", "Time Series Forecasting");
+    	modelLearning.put("Regression", "Regression");
+    	modelLearning.put("Classification", "Classification");
+    	modelLearning.put("Anomaly Detection", "Anomaly Detection");
+    	modelLearning.put("Time Series Forecasting", "Time Series Forecasting");
     	
     	HashMap<Boolean, String> problemType = new HashMap<>();
     	problemType.put(true, "Problem from our library");
@@ -425,9 +432,10 @@ public class AppController {
         	Boolean isLibraryProblem = algorithm.getProblem().getLibraryProblem();
 
         	if(isLibraryProblem) {
-	        	problemName = algorithm.getProblem().getProblemName();
+	        	String userFriendlyProblemName = algorithm.getProblem().getProblemName();
+	        	problemName = createOperatingSystemFriendlyProblemName(userFriendlyProblemName);
 	        	model.addAttribute("problemName", problemName);
-	        	model.addAttribute("userFriendlyProblemName", problemName);
+	        	model.addAttribute("userFriendlyProblemName", userFriendlyProblemName);
 	        	String[] selectedAlgoParam = servletRequest.getParameterValues("selected_algorithms");
 	        	List<String> selectedAlgorithms = new ArrayList<>();
 	        	if(selectedAlgoParam != null && selectedAlgoParam.length > 0) {
@@ -447,18 +455,18 @@ public class AppController {
 	        	}
 	        	
 	        	File directory = new File(userDataPath + "/" + userName + "/" + problemName);
-	        	if(!directory.exists()) {
-	        		try {
-	        		directory.mkdirs();
-	        		}catch(Exception e) {
-	        			logger.error("error making directory: " + directory.getAbsolutePath());
-	        		}
-	        	}else {
-	        		boolean cleared = clearUserDirectory(directory);
-	        		if(cleared) {
-	        			logger.info("user directory cleared successfully: " + directory.getAbsolutePath());
-	        		}
-	        	}
+//	        	if(!directory.exists()) {
+//	        		try {
+//	        		directory.mkdirs();
+//	        		}catch(Exception e) {
+//	        			logger.error("error making directory: " + directory.getAbsolutePath());
+//	        		}
+//	        	}else {
+//	        		boolean cleared = clearUserDirectory(directory);
+//	        		if(cleared) {
+//	        			logger.info("user directory cleared successfully: " + directory.getAbsolutePath());
+//	        		}
+//	        	}
 
 	        	
 	        	String newAlgorithm = servletRequest.getParameter("new_algo");
@@ -485,18 +493,18 @@ public class AppController {
         		algorithm.getProblem().setProblemName(problemName);
         		
             	File directory = new File(userDataPath + "/" + userName + "/" + problemName);
-            	if(!directory.exists()) {
-            		try {
-            		directory.mkdirs();
-            		}catch(Exception e) {
-            			logger.error("error making directory: " + directory.getAbsolutePath());
-            		}
-            	}else {
-            		boolean cleared = clearUserDirectory(directory);
-            		if(cleared) {
-            			logger.info("user directory cleared successfully: " + directory.getAbsolutePath());
-            		}
-            	}
+//            	if(!directory.exists()) {
+//            		try {
+//            		directory.mkdirs();
+//            		}catch(Exception e) {
+//            			logger.error("error making directory: " + directory.getAbsolutePath());
+//            		}
+//            	}else {
+//            		boolean cleared = clearUserDirectory(directory);
+//            		if(cleared) {
+//            			logger.info("user directory cleared successfully: " + directory.getAbsolutePath());
+//            		}
+//            	}
         		
         		MultipartFile customPerformanceFile = algorithm.getCustomPerformanceFile();
         		logger.info("submitting performance file for custom problem. ");
@@ -517,8 +525,10 @@ public class AppController {
         	model.addAttribute("PerformanceMetricLabel", algorithm.getAlgorithm().getPerformanceMetricLabel());
         	
         	
-        	String[] jobOutput = executeFootprintGenerationMatlabCode(userName, problemName);
-        	boolean success = Boolean.parseBoolean(jobOutput[0]);
+//        	String[] jobOutput = executeFootprintGenerationMatlabCode(userName, problemName);
+//        	boolean success = Boolean.parseBoolean(jobOutput[0]);
+        	String[] jobOutput = {"true", "1"};
+        	boolean success = true;
         	if(success) {
             	File file = new File(userDataPath + "/" + userName + "/" + problemName + "/matilda_logs.txt");
             	int initialWait = 2000;

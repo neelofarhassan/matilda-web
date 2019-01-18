@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 import org.unimelb.matilda.model.User;
 import org.unimelb.matilda.service.UserService;
@@ -24,7 +27,13 @@ import org.unimelb.matilda.service.UserService;
  *
  */
 @Component
-public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
+  implements AuthenticationSuccessHandler {
+ 
+    public CustomSuccessHandler() {
+        super();
+        setUseReferer(true);
+    }
 	
  @Autowired
  UserService userService;
@@ -32,10 +41,10 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     static final Logger logger = Logger.getLogger(CustomSuccessHandler.class);
     
-    public CustomSuccessHandler() {
-        super();
-        setUseReferer(true);
-    }
+//    public CustomSuccessHandler() {
+////        super();
+//        super.setUseReferer(true);
+//    }
  
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -55,6 +64,13 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
      * appropriate URL according to his/her role.
      */
     protected String determineTargetUrl(Authentication authentication, HttpServletRequest request) {
+    	String savedRequestURL = "/";
+    	HttpSession session = request.getSession();
+        SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+        if(savedRequest != null) {
+        	savedRequestURL = savedRequest.getRedirectUrl();	
+        }
+        
     	String userName="";
     	String status, url ="";
         Object principal = authentication.getPrincipal();
@@ -66,7 +82,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         	if(status.equals("waiting")) {
         		url = "/registrationpending";
         	}else {
-        		url = "/";
+        		url = savedRequestURL;
         	}
         	}else {
         		logger.error("Could not retrieve username from principal.");

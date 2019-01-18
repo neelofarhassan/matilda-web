@@ -9,7 +9,7 @@
   <title> Matilda </title>
   <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css">
   <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script type="text/javascript">
   jQuery(document).ready(function() {
 	$('#problems').hover(function(){

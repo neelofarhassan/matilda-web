@@ -1,4 +1,7 @@
+
 $(document).ready(function() {
+	var chart1 = "";
+	var chart2 = "";
 	$('#cancel_job').click( function(e) {
 		e.preventDefault();
 		if (confirm("Are you sure you want to cancel the current execution?")) {
@@ -162,7 +165,7 @@ $(document).ready(function() {
     	 		}
     	 	});
     	 	
-    	 			$('#foorprint_form').submit(function(){
+    	 				$('#footprint_submit').click(function(){
     	 				 valid = true;
     	 				 problem_type = $('input[name="problem.libraryProblem"]:checked').val();
     	 				 if(problem_type == 'true'){
@@ -191,7 +194,8 @@ $(document).ready(function() {
     	 					 }
     	 				 }else{
     	 					 if($('#problem_name').val() == ''){
-    	 						$('#problem_name_error').html('Please specify the name of the problem. ')	 
+    	 						$('#problem_name_error').html('Please specify the name of the problem. ');
+    	 						valid = false;
     	 					 }else{
     	 						 var validName = new RegExp('^[a-zA-Z0-9-\\s]+$');
     	 						 if(validName.test($('#problem_name').val())){
@@ -199,6 +203,7 @@ $(document).ready(function() {
     	 						}else{
     	 							console.log('error in problem name');
     	 							$('#problem_name_error').html('Only letters, numbers, hyphen and spaces are allowed.');
+    	 							valid = false;
     	 						}
     	 					 }
     	 					 
@@ -249,7 +254,18 @@ $(document).ready(function() {
     	 				 }else{
     	 					$('#performance_metric_label_error').html('');
     	 				 }
-	 				    return valid;
+    	 				 if(valid){
+    	 					 console.log('before submit');
+    	 					 $('#foorprint_form').submit();
+    	 					 console.log('after submit');
+    	 					 $('#footprint_form_container').css({opacity: 0.5});
+     	 					 $("#foorprint_form :input").prop("disabled", true);
+    	 						$('#loader').removeClass('hidden_div').addClass('display_div');
+//    	 						$('#loader').scrollTop($('#loader').height());
+    	 						var position = $("#footprint_form_container").position();
+    	 						 $('html,body').animate({scrollTop: position.top},'slow');
+    	 					
+    	 				 }
     	 			});
     	 			
     	 				$("#advanced_settings_link").click(function() {
@@ -260,7 +276,17 @@ $(document).ready(function() {
      	 				   scrollToAnchor('page_start_anchor');
      	 				});
 
-});
+//    	 				$('#export').click(function() {
+//    	 				    Highcharts.exportCharts([chart1, chart2]);
+//    	 				});
+    	 				
+    	 				$('#export').click(function() {
+    	 				    Highcharts.exportCharts([chart1, chart2], {type: 'application/pdf'});
+    	 				});
+
+    	 			});
+
+
 
 function scrollToAnchor(aid){
 	    var aTag = $("a[id='"+ aid +"']");
@@ -299,9 +325,10 @@ function reset_library_problem_settings(){
 function showExecutionLogs(user, problem, modificationTime, lineNumber, logContents, methodCalls){
 	var endOfFile = "";
 	var scriptSuccess = "";
+	var $logsdiv = $("#logs");
+	var height;
 	$.ajax({
 		type: "get",
-//		url: "<c:url value="/readMatlabLogFileRecursively" />",
 		url: logFileURL,
 		data: {userName:user, problemName:problem, lastModified:modificationTime, lastLineRead:lineNumber},
 		success: function(data){
@@ -326,7 +353,6 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 			waitingDiv = '<div class="progress"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'; 
 			
 			$('#logs').html(logContents);
-			var $logsdiv = $("#execution_logs_container");
 			$logsdiv.scrollTop($logsdiv.height());
 			if(endOfFile != 'true' && scriptSuccess != 'false'){
 				if(methodCalls > 0){
@@ -336,12 +362,16 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 				methodCalls = parseInt(methodCalls) + 1;
 				 setTimeout(showExecutionLogs, 10000, user, problem, modificationTime, lineNumber, logContents, methodCalls);
 			}else{
-// 				$('#close-execution').addClass('hidden_div');
+				
+				$logsdiv.scrollTop($logsdiv.height());
+				$('html, body').animate({scrollTop: height}, 'slow');
 				hideExecutionCancellationButton();
 				if(scriptSuccess == 'false'){
 					$('#error_container').html('<p><font color="red"><h2>An error occured !!! </h2></font><br><br>Please see log window for details.</p> ');
 				}else{
 					showPerformanceTable(user, problem);
+					$('#graph_body').removeClass('hidden_div').addClass('display_div');
+					$('#table_container').removeClass('hidden_div').addClass('display_div');
 					showDemoGraph(user, problem, 'feature_1');
 				}
 			}
@@ -355,11 +385,9 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 function showPerformanceTable(user, problem){
 	$.ajax({
 		type: "get",
-//		url: "<c:url value="/readPerformanceTable" />",
 		url: performanceTableURL,
 		data: {userName:user, problemName:problem},
 		success: function(data){
-// 			console.log('returned data: ' + data);
 			var rowCount = 0;
 			var table = "<table id='performance_table'>";
 			$.each(data, function(k, v){
@@ -380,7 +408,6 @@ function showPerformanceTable(user, problem){
 			})
 			table = table + "</table>";
 			$('#table_container').html(table);
-// 			console.log(table);
 		},
 		error: function(){
 			$('#table_container').html('<p><font color=red>Some error occured while generating footprint performance table. Please see execution logs for the details. </font><p>');
@@ -390,15 +417,12 @@ function showPerformanceTable(user, problem){
 	
 	$.ajax({
 		type: "get",
-//		url: "<c:url value="/readMatlabLogFileRecursively" />",
-		
 		url: logFileURL,
 		data: {userName:user, problemName:problem, lastModified:modificationTime, lastLineRead:lineNumber},
 		success: function(data){
 			if(!$.trim(data)){
 				$('#logs').html('<h2><font color="red"> Sorry, some problem occured while executing your code. Please <a href="<c:url value="/contact-us" />">contact</a> website administation.</font><h2>');
 			}else{
-// 			console.log('returned data: ' + data);
 			$.each(data, function(k,v){
 				if(k == 'true'){
 				
@@ -517,8 +541,10 @@ function showDemoGraph(userName, problemName, selectedFeature){
 				    	 }
 			    	 }
 			     });
-				    $('#graph_body').highcharts({
+//				  $('#graph_body').highcharts({
+			     chart1 = new Highcharts.Chart({
 				        chart: {
+				        	renderTo: 'graph_body',
 				            type: 'scatter',
 				            zoomType: 'xy'
 				        },
@@ -567,7 +593,7 @@ function showDemoGraph(userName, problemName, selectedFeature){
 				            }
 				        },
 				        title: {
-				        	text: selectedFeatureName
+				        	text: ""
 				        },
 				 	   xAxis: {
 				      	      title: {
@@ -583,10 +609,89 @@ function showDemoGraph(userName, problemName, selectedFeature){
 				      	   yAxis : {
 				      		 height: 700,            
 				             width: 700,
+				             lineWidth: 1,
 				      	      title: {
 				      	         text: y_label
 				      	      }
 				      	   }
+				    });
+			     
+			     
+			     chart2 = new Highcharts.Chart({
+				        chart: {
+				        	renderTo: 'graph_body2',
+				            type: 'scatter',
+				            zoomType: 'xy'
+				        },
+				        colors: [
+				            'indigo',
+				            'DodgerBlue',
+				            'GreenYellow',
+				            'orange',
+				            'yellow'
+				        ],
+				        colorAxis: {
+//		 		            min: 0,
+//		 		            max: 100,
+//		 		            minColor: 'yellow',
+//		 		            maxColor: 'red'             
+				            dataClassColor: 'category',
+						                    dataClasses: [{
+						                        to: 0.2
+						                    }, {
+						                        from: 0.2,
+						                        to: 0.4
+						                    }, {
+						                        from: 0.4,
+						                        to: 0.6
+						                    },{
+						                    	from:0.6,
+						                    	to:0.8
+						                    },{
+						                    	from:0.8,
+						                    	to:1.0
+						                    }]
+				        },
+				        series: [{
+				        	name: 'Instance Space',
+				            showInLegend: false,
+				            color: 'red',
+				            data: dataArray
+				            
+				        }],
+				        plotOptions: {
+				            scatter: {
+				                tooltip: {
+				                    headerFormat: '<b>Instance Space</b><br>',
+				                    pointFormat: tooltipText
+				                }
+				            }
+				        },
+				        title: {
+				        	text: ""
+				        },
+				 	   xAxis: {
+				      	      title: {
+				      	         enabled: true,
+				      	         text: x_label
+				      	      },
+				      	    height: 700,            
+				            width: 700,
+				      	      startOnTick: true,
+				      	      endOnTick: true,
+				      	      showLastLabel: true
+				      	   },
+				      	   yAxis : {
+				      		 height: 700,            
+				             width: 700,
+				             lineWidth: 1,
+				      	      title: {
+				      	         text: y_label
+				      	      }
+				      	   },
+				      	   exporting: {
+//				      	        width: 200
+				      	    }
 				    });
 				    
 				    $('#features').html(featureSelectionOptions);
@@ -597,6 +702,23 @@ function showDemoGraph(userName, problemName, selectedFeature){
 	 });
 	 
 	 	
+	 
+//	 chart2 = new Highcharts.Chart({
+//
+//		    chart: {
+//		        renderTo: 'graph_body2',
+//		        type: 'column'
+//		    },
+//
+//		    xAxis: {
+//		        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+//		    },
+//
+//		    series: [{
+//		        data: [176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 29.9, 71.5, 106.4, 129.2, 144.0]}]
+//
+//		});
+	 
 }
 
 function hideExecutionCancellationButton() {
@@ -610,3 +732,60 @@ function hideExecutionCancellationButton() {
     	}
     $('#log_header_table td:nth-child(2)').hide();
     }
+
+
+/**
+ * Create a global getSVG method that takes an array of charts as an
+ * argument
+ */
+Highcharts.getSVG = function (charts) {
+	charts = [chart1, chart2];
+    var svgArr = [],
+        top = 0,
+        width = 0;
+
+    Highcharts.each(charts, function (chart) {
+        var svg = chart.getSVG(),
+            // Get width/height of SVG for export
+            svgWidth = +svg.match(
+                /^<svg[^>]*width\s*=\s*\"?(\d+)\"?[^>]*>/
+            )[1],
+            svgHeight = +svg.match(
+                /^<svg[^>]*height\s*=\s*\"?(\d+)\"?[^>]*>/
+            )[1];
+
+        svg = svg.replace(
+            '<svg',
+            '<g transform="translate(0,' + top + ')" '
+        );
+        svg = svg.replace('</svg>', '</g>');
+
+        top += svgHeight;
+        width = Math.max(width, svgWidth);
+
+        svgArr.push(svg);
+    });
+
+    return '<svg height="' + top + '" width="' + width +
+        '" version="1.1" xmlns="http://www.w3.org/2000/svg">' +
+        svgArr.join('') + '</svg>';
+};
+
+/**
+ * Create a global exportCharts method that takes an array of charts as an
+ * argument, and exporting options as the second argument
+ */
+Highcharts.exportCharts = function (charts, options) {
+
+    // Merge the options
+    options = Highcharts.merge(Highcharts.getOptions().exporting, options);
+
+    // Post to export server
+    Highcharts.post(options.url, {
+        filename: options.filename || 'chart',
+        type: options.type,
+//        width: options.width,
+        width: 1000,
+        svg: Highcharts.getSVG(charts)
+    });
+};

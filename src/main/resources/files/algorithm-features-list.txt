@@ -2,7 +2,7 @@
 			{
 				"problemType":"optimization",
 				"problemName":"Graph Coloring Problem",
-				"problemCode":"gcp",
+				"problemCode":"Graph Coloring Problem",
 				"libraryProblem":true,
 				"libraryAlgorithms":[
 								{
@@ -140,7 +140,7 @@
 			{
 				"problemType":"optimization",
 				"problemName":"Travelling Salesman Problem",
-				"problemCode":"tsp",
+				"problemCode":"Travelling Salesman Problem",
 				"libraryProblem":true,
 				"libraryAlgorithms":[
 								{
