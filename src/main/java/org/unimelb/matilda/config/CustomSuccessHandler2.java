@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.unimelb.matilda.model.User;
@@ -24,7 +25,8 @@ import org.unimelb.matilda.service.UserService;
  *
  */
 @Component
-public class CustomSuccessHandler2 extends SimpleUrlAuthenticationSuccessHandler {
+public class CustomSuccessHandler2 extends SimpleUrlAuthenticationSuccessHandler 
+implements AuthenticationSuccessHandler {
 	
  @Autowired
  UserService userService;
@@ -33,7 +35,7 @@ public class CustomSuccessHandler2 extends SimpleUrlAuthenticationSuccessHandler
     static final Logger logger = Logger.getLogger(CustomSuccessHandler.class);
     
     public CustomSuccessHandler2() {
-//        super();
+        super();
         super.setUseReferer(true);
     }
  

@@ -14,6 +14,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 import org.unimelb.matilda.model.User;
@@ -27,8 +28,7 @@ import org.unimelb.matilda.service.UserService;
  *
  */
 @Component
-public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
-  implements AuthenticationSuccessHandler {
+public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
  
     public CustomSuccessHandler() {
         super();
@@ -64,13 +64,21 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
      * appropriate URL according to his/her role.
      */
     protected String determineTargetUrl(Authentication authentication, HttpServletRequest request) {
-    	String savedRequestURL = "/";
+        StringBuilder redirectionUrl = new StringBuilder();
+        redirectionUrl.append("/");
     	HttpSession session = request.getSession();
-        SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+        DefaultSavedRequest savedRequest = (DefaultSavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
         if(savedRequest != null) {
-        	savedRequestURL = savedRequest.getRedirectUrl();	
+	        String[] URITokens = savedRequest.getRequestURI().split("/");
+
+	        int count=0;
+	        for(String token: URITokens) {
+	        	if(count > 1) {
+	        		redirectionUrl.append(token + "/");
+	        	}
+	        	count++;
+	        }
         }
-        
     	String userName="";
     	String status, url ="";
         Object principal = authentication.getPrincipal();
@@ -82,7 +90,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
         	if(status.equals("waiting")) {
         		url = "/registrationpending";
         	}else {
-        		url = savedRequestURL;
+        		url = redirectionUrl.toString();
+//        		url = "/";
         	}
         	}else {
         		logger.error("Could not retrieve username from principal.");

@@ -104,9 +104,10 @@
 						</div>
 
 						<div>
-							<label><span class="tooltip">Short Research Description<img src="<c:url value="resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Please provide a brief description of how do you want to interact with 
-								our repository? This will help us to give access to only legitimate researchers to our repository who doesn't breach the security and
-								contribute quality data.</span></span></label>
+							<label><span class="tooltip">Short Research Description<img src="<c:url value="resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">
+							Please provide a brief description of how you wish to interact with our repository. This information
+							helps us to maintain the security and data quality regulations. 
+							</span></span></label>
 							<form:textarea path="researchDescription" id="research_description" aria-required="true" />
 							<div class="has-error"> 
 								<form:errors path="researchDescription" />

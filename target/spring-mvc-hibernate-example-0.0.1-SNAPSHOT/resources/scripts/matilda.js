@@ -1,4 +1,11 @@
+
 $(document).ready(function() {
+	var chart1 = "";
+	var chart2 = "";
+	var option1 = "";
+	var chart3="";
+	var chart4="";
+	EXPORT_WIDTH=800;
 	$('#cancel_job').click( function(e) {
 		e.preventDefault();
 		if (confirm("Are you sure you want to cancel the current execution?")) {
@@ -273,7 +280,76 @@ $(document).ready(function() {
      	 				   scrollToAnchor('page_start_anchor');
      	 				});
 
-});
+    	 				
+    	 				$('#export').click(function() {
+//    	 				    Highcharts.exportCharts([chart1, chart2]);
+//    	 					save_chart(chart1, 'chart');
+    	 					$('#container').highcharts(settings);
+    	 					console.log('into local export function');
+    	 			        var chart = $('#container').highcharts();
+    	 		            chart.exportChart({
+    	 		            type: 'image/png',
+    	 		            filename: 'chart1'
+    	 		         });
+    	 					
+    	 					
+//    	 					Highcharts.exportCharts([chart1, chart2], "");
+    	 				});
+    	 				
+    	 				
+   
+    	 				
+    	 				$('#export-test').click(function() {
+//    	 				    Highcharts.exportCharts([chart1, chart2], {type: 'application/pdf'});
+//    	 					console.log('into click function');
+//    	 					exportZippedCharts();
+//    	 					Highcharts.exportCharts([chart1, chart2]);
+//    	 					$('#graph1').highcharts(chart1);
+//    	 					console.log('into local export function');
+//    	 			        var chart = $('#graph1').highcharts();
+//    	 		            var exported_chart1 = chart.exportChart({
+//    	 		            type: 'image/png',
+//    	 		            filename: 'chart1'
+//    	 		         });
+    	 					exportZippedCharts();
+    	 				});
+  
+
+    	 				$('#export-jpeg').click(function() {
+    	 					console.log('jpg export');
+//    	 					 Highcharts.exportCharts();
+    	 					exportZippedCharts('image/jpeg');
+    	 				});
+    	 				
+    	 				$('#export-pdf').click(function() {
+    	 					console.log('pdf export');
+//    	 					 Highcharts.exportCharts({
+//    	 				        type: 'application/pdf'
+//    	 				    });
+    	 					exportZippedCharts('application/pdf');
+    	 				});
+    	 				
+    	 			    $('#save_btn').click(function() {
+    	 			    	save_chart($('#container').highcharts(), 'chart');
+    	 			    });
+
+    	 			});
+
+
+var settings =  
+{
+ "chart": {
+   "type":"line"
+},
+"xAxis": { 
+  "endOnTick":true
+},
+"series":[
+   {"name":"series1","data":[[1,1200],[2,2200],[3,3200],[4,1800],[5,1500]]},
+   {"name":"series2","data":[[1,1050],[2,2050],[3,1650],[4,1450],[5,1350]]},
+   {"name":"series3","data":[[1,1250],[2,2250],[3,1850],[4,1650],[5,1550]]}]
+}
+
 
 function scrollToAnchor(aid){
 	    var aTag = $("a[id='"+ aid +"']");
@@ -316,7 +392,6 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 	var height;
 	$.ajax({
 		type: "get",
-//		url: "<c:url value="/readMatlabLogFileRecursively" />",
 		url: logFileURL,
 		data: {userName:user, problemName:problem, lastModified:modificationTime, lastLineRead:lineNumber},
 		success: function(data){
@@ -351,16 +426,15 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 				 setTimeout(showExecutionLogs, 10000, user, problem, modificationTime, lineNumber, logContents, methodCalls);
 			}else{
 				
-// 				$('#close-execution').addClass('hidden_div');
 				$logsdiv.scrollTop($logsdiv.height());
-				$('html, body').animate({scrollTop: height}, 'slow');
+				console.log('EOF and scrolling to bottom expected');
+//				$('html, body').animate({scrollTop: height}, 'slow');
 				hideExecutionCancellationButton();
 				if(scriptSuccess == 'false'){
 					$('#error_container').html('<p><font color="red"><h2>An error occured !!! </h2></font><br><br>Please see log window for details.</p> ');
 				}else{
 					showPerformanceTable(user, problem);
-					$('#graph_body').removeClass('hidden_div').addClass('display_div');
-					$('#table_container').removeClass('hidden_div').addClass('display_div');
+					$('#graph_container').css("display","block");
 					showDemoGraph(user, problem, 'feature_1');
 				}
 			}
@@ -374,11 +448,9 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 function showPerformanceTable(user, problem){
 	$.ajax({
 		type: "get",
-//		url: "<c:url value="/readPerformanceTable" />",
 		url: performanceTableURL,
 		data: {userName:user, problemName:problem},
 		success: function(data){
-// 			console.log('returned data: ' + data);
 			var rowCount = 0;
 			var table = "<table id='performance_table'>";
 			$.each(data, function(k, v){
@@ -399,7 +471,6 @@ function showPerformanceTable(user, problem){
 			})
 			table = table + "</table>";
 			$('#table_container').html(table);
-// 			console.log(table);
 		},
 		error: function(){
 			$('#table_container').html('<p><font color=red>Some error occured while generating footprint performance table. Please see execution logs for the details. </font><p>');
@@ -409,15 +480,12 @@ function showPerformanceTable(user, problem){
 	
 	$.ajax({
 		type: "get",
-//		url: "<c:url value="/readMatlabLogFileRecursively" />",
-		
 		url: logFileURL,
 		data: {userName:user, problemName:problem, lastModified:modificationTime, lastLineRead:lineNumber},
 		success: function(data){
 			if(!$.trim(data)){
 				$('#logs').html('<h2><font color="red"> Sorry, some problem occured while executing your code. Please <a href="<c:url value="/contact-us" />">contact</a> website administation.</font><h2>');
 			}else{
-// 			console.log('returned data: ' + data);
 			$.each(data, function(k,v){
 				if(k == 'true'){
 				
@@ -536,8 +604,11 @@ function showDemoGraph(userName, problemName, selectedFeature){
 				    	 }
 			    	 }
 			     });
-				    $('#graph_body').highcharts({
+////				  $('#graph_body').highcharts({
+////			     chart1 = new Highcharts.Chart({
+			     chart1 = {
 				        chart: {
+				        	renderTo: 'graph1',
 				            type: 'scatter',
 				            zoomType: 'xy'
 				        },
@@ -586,7 +657,7 @@ function showDemoGraph(userName, problemName, selectedFeature){
 				            }
 				        },
 				        title: {
-				        	text: selectedFeatureName
+				        	text: ""
 				        },
 				 	   xAxis: {
 				      	      title: {
@@ -602,20 +673,113 @@ function showDemoGraph(userName, problemName, selectedFeature){
 				      	   yAxis : {
 				      		 height: 700,            
 				             width: 700,
+				             lineWidth: 1,
 				      	      title: {
 				      	         text: y_label
 				      	      }
-				      	   }
-				    });
-				    
-				    $('#features').html(featureSelectionOptions);
-				 
-				 
+				      	   },
+					      	 exporting: {
+				      	    enabled: true,
+				      	    sourceWidth: 800,
+				      	    sourceHeight: 850
+//				      	  fallbackToExportServer: false
+				      	}
+			     }
+//
+//			     
+//			     chart2 = new Highcharts.Chart({
+			     chart2 = {
+				        chart: {
+				        	renderTo: 'graph2',
+				            type: 'scatter',
+				            zoomType: 'xy'
+				        },
+				        colors: [
+				            'indigo',
+				            'DodgerBlue',
+				            'GreenYellow',
+				            'orange',
+				            'yellow'
+				        ],
+				        colorAxis: {
+//		 		            min: 0,
+//		 		            max: 100,
+//		 		            minColor: 'yellow',
+//		 		            maxColor: 'red'             
+				            dataClassColor: 'category',
+						                    dataClasses: [{
+						                        to: 0.2
+						                    }, {
+						                        from: 0.2,
+						                        to: 0.4
+						                    }, {
+						                        from: 0.4,
+						                        to: 0.6
+						                    },{
+						                    	from:0.6,
+						                    	to:0.8
+						                    },{
+						                    	from:0.8,
+						                    	to:1.0
+						                    }]
+				        },
+				        series: [{
+				        	name: 'Instance Space',
+				            showInLegend: false,
+				            color: 'red',
+				            data: dataArray
+				            
+				        }],
+				        plotOptions: {
+				            scatter: {
+				                tooltip: {
+				                    headerFormat: '<b>Instance Space</b><br>',
+				                    pointFormat: tooltipText
+				                }
+				            }
+				        },
+				        title: {
+				        	text: ""
+				        },
+				 	   xAxis: {
+				      	      title: {
+				      	         enabled: true,
+				      	         text: x_label
+				      	      },
+				      	    height: 700,            
+				            width: 700,
+				      	      startOnTick: true,
+				      	      endOnTick: true,
+				      	      showLastLabel: true
+				      	   },
+				      	   yAxis : {
+				      		 height: 700,            
+				             width: 700,
+				             lineWidth: 1,
+				      	      title: {
+				      	         text: y_label
+				      	      }
+				      	   },
+					      exporting: {
+				      	    enabled: true,
+				      	    sourceWidth: 800,
+				      	    sourceHeight: 850
+//				      	    fallbackToExportServer: false
+				      	}
+			     };
+			     
+				     
+			     
+//			        // Chart 1
+			        $('#graph1').highcharts(chart1);
+//			        
+//			        // Chart 2
+			        $('#graph2').highcharts(chart2);
+			     
+				    $('#graph_features').html(featureSelectionOptions);
 			 });
 		 });
 	 });
-	 
-	 	
 }
 
 function hideExecutionCancellationButton() {
@@ -629,3 +793,354 @@ function hideExecutionCancellationButton() {
     	}
     $('#log_header_table td:nth-child(2)').hide();
     }
+
+
+//
+//Highcharts.getSVG = function(charts, options, callback) {
+//    var svgArr = [],
+//    		top = 0,
+//        width = 0,
+//        i,
+//        svgResult = function (svgres) {
+//            var svg = svgres.replace('<svg', '<g transform="translate(0,' + top + ')" ');
+//            svg = svg.replace('</svg>', '</g>');
+//            top += charts[i].chartHeight;
+//            width = Math.max(width, charts[i].chartWidth);
+//            svgArr.push(svg);
+//            if (svgArr.length === charts.length) {
+//              callback('<svg height="'+ top +'" width="' + width + '" version="1.1" xmlns="http://www.w3.org/2000/svg">' + svgArr.join('') + '</svg>');
+//            }
+//        };
+//		for (i = 0; i < charts.length; ++i) {
+//				charts[i].getSVGForLocalExport(options, {}, function () { 
+//        	console.log("Failed to get SVG");
+//       	}, svgResult);
+//		}
+//};
+
+///**
+// * Create a global exportCharts method that takes an array of charts as an argument,
+// * and exporting options as the second argument
+// */
+//Highcharts.exportCharts = function(charts, options) {
+//		// Merge the options
+//    options = Highcharts.merge(Highcharts.getOptions().exporting, options);    
+//		
+//    var imageType = options && options.type || 'image/png';
+  
+//		// Get SVG asynchronously and then download the resulting SVG
+//    Highcharts.getSVG(charts, options, function (svg) {
+//      Highcharts.downloadSVGLocal(svg,
+//        (options.filename || 'chart')  + '.' + (imageType === 'image/svg+xml' ? 'svg' : imageType.split('/')[1]),
+//        imageType,
+//        options.scale || 2,
+//        function () {
+//          console.log("Failed to export on client side");
+//        });
+//    });
+//};
+
+///**
+// * Create a global getSVG method that takes an array of charts as an
+// * argument
+// */
+//Highcharts.getSVG = function (charts) {
+//	charts = [chart1, chart2];
+//    var svgArr = [],
+//        top = 0,
+//        width = 0;
+//
+//    Highcharts.each(charts, function (chart) {
+//        var svg = chart.getSVG(),
+//            // Get width/height of SVG for export
+//            svgWidth = +svg.match(
+//                /^<svg[^>]*width\s*=\s*\"?(\d+)\"?[^>]*>/
+//            )[1],
+//            svgHeight = +svg.match(
+//                /^<svg[^>]*height\s*=\s*\"?(\d+)\"?[^>]*>/
+//            )[1];
+//
+//        svg = svg.replace(
+//            '<svg',
+//            '<g transform="translate(0,' + top + ')" '
+//        );
+//        svg = svg.replace('</svg>', '</g>');
+//
+//        top += svgHeight;
+//        width = Math.max(width, svgWidth);
+//
+//        svgArr.push(svg);
+//    });
+//
+//    return '<svg height="' + top + '" width="' + width +
+//        '" version="1.1" xmlns="http://www.w3.org/2000/svg">' +
+//        svgArr.join('') + '</svg>';
+//};
+//
+///**
+// * Create a global exportCharts method that takes an array of charts as an
+// * argument, and exporting options as the second argument
+// */
+//Highcharts.exportCharts = function (charts, options) {
+//
+//    // Merge the options
+//    options = Highcharts.merge(Highcharts.getOptions().exporting, options);
+//
+//    // Post to export server
+//    Highcharts.post(options.url, {
+//        filename: options.filename || 'chart',
+//        type: options.type,
+////        width: options.width,
+//        width: 1000,
+//        svg: Highcharts.getSVG(charts)
+//    });
+//};
+
+
+
+///**
+// * Create a global getSVG method that takes an array of charts as an argument. The SVG is returned as an argument in the callback.
+// */
+//Highcharts.getSVG = function(charts, options, callback) {
+//    var svgArr = [],
+//    		top = 0,
+//        width = 0,
+//        i,
+//        svgResult = function (svgres) {
+//            var svg = svgres.replace('<svg', '<g transform="translate(0,' + top + ')" ');
+//            svg = svg.replace('</svg>', '</g>');
+//            top += charts[i].chartHeight;
+//            width = Math.max(width, charts[i].chartWidth);
+//            svgArr.push(svg);
+//            if (svgArr.length === charts.length) {
+//              callback('<svg height="'+ top +'" width="' + width + '" version="1.1" xmlns="http://www.w3.org/2000/svg">' + svgArr.join('') + '</svg>');
+//            }
+//        };
+//		for (i = 0; i < charts.length; ++i) {
+//				charts[i].getSVGForLocalExport(options, {}, function () { 
+//        	console.log("Failed to get SVG");
+//       	}, svgResult);
+//		}
+//};
+
+///**
+// * Create a global exportCharts method that takes an array of charts as an argument,
+// * and exporting options as the second argument
+// */
+//Highcharts.exportCharts = function(charts, options) {
+//		// Merge the options
+//    options = Highcharts.merge(Highcharts.getOptions().exporting, options);    
+//		
+//    var imageType = options && options.type || 'image/png';
+//  alert('local options: ' + options);
+//		// Get SVG asynchronously and then download the resulting SVG
+//    Highcharts.getSVG(charts, options, function (svg) {
+//      Highcharts.downloadSVGLocal(svg,
+//        (options.filename || 'chart')  + '.' + (imageType === 'image/svg+xml' ? 'svg' : imageType.split('/')[1]),
+//        imageType,
+//        options.scale || 2,
+//        function () {
+//          console.log("Failed to export on client side");
+//        });
+//    });
+//};
+
+//function save_chart(chart, filename) {
+//    var render_width = EXPORT_WIDTH;
+//    var render_height = render_width * chart.chartHeight / chart.chartWidth
+//
+//    var svg = chart.getSVG({
+//        exporting: {
+//            sourceWidth: chart.chartWidth,
+//            sourceHeight: chart.chartHeight
+//        }
+//    });
+//
+//    var canvas = document.createElement('canvas');
+//    canvas.height = render_height;
+//    canvas.width = render_width;
+//
+//    var image = new Image;
+//    image.onload = function() {
+//        canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
+//        var data = canvas.toDataURL("image/png")
+//        download(data, filename + '.png');
+//    };
+//    image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
+//}
+
+//function download(data, filename) {
+//    var a = document.createElement('a');
+//    a.download = filename;
+//    a.href = data
+//    document.body.appendChild(a);
+//    a.click();
+//    a.remove();
+//}
+
+
+function exportZippedCharts(imageType){
+        
+		console.log('image type: ' + imageType);
+        // ZIP file object, which will as the AJAX requests resolve
+        var zip = new JSZip();
+        
+        // URL to Highcharts export server
+        var exportUrl = 'https://export.highcharts.com/';
+
+        // POST parameter to Highcharts export server for chart 1
+        var object = {
+            options: JSON.stringify(chart1),
+//            type: 'image/jpeg',
+            type: imageType,
+            async: true
+        };
+//        alert('chart 1 params: ' + JSON.stringify(object));
+        // Ajax request for chart 1
+        var d1 = $.ajax({
+            type: 'post',
+            url: exportUrl,
+            data: object,
+            success: function (data) {
+//            	alert('1 success');
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+//                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            },
+            complete: function (XMLHttpRequest, status) {
+//                alert("1 completion:" + status);
+              }
+        
+        });
+        
+        // POST parameter to Highcharts export server for chart 2
+        var object = {
+            options: JSON.stringify(chart2),
+//            type: 'image/jpeg',
+            type: imageType,
+            async: true
+        };
+
+        // Ajax request for chart 2
+        var d2 = $.ajax({
+            type: 'post',
+            url: exportUrl,
+            data: object,
+            success: function (data) {
+//            	alert('2 success')
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+//                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            },
+            complete: function (XMLHttpRequest, status) {
+//                alert("2 completion:" + status);
+              }
+        });
+        
+        // When URL to rendered images are returned ...
+        $.when(d1,d2).done(function(v1,v2) {
+        	// Get contents of rendered image 1
+            var p1 = new JSZip.external.Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(exportUrl + v1[0], function(err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+            
+            // Get contents of rendered image 2
+            var p2 = new JSZip.external.Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(exportUrl + v2[0], function(err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+            
+            // When content of rendered images have been fetched ...
+            Promise.all([p1,p2]).then(function(values) {
+                // Add images to ZIP
+            	if(imageType == 'image/jpeg'){
+            		console.log('into if');
+            		zip.file("chart1.jpeg", values[0], {binary:true});
+                    zip.file("chart2.jpeg", values[1], {binary:true});
+            	}else if(imageType == 'application/pdf'){
+            		console.log('into else')
+            		zip.file("chart1.pdf", values[0], {binary:true});
+                    zip.file("chart2.pdf", values[1], {binary:true});	
+            	}
+                
+                
+                // Generate and save ZIP
+                zip.generateAsync({type:"blob"})
+                    .then(function(content) {
+                    saveAs(content, "charts.zip");
+                });
+            });
+        });
+}
+
+
+Highcharts.getSVG = function (charts, options, callback) {
+	alert(JSON.stringify(options));
+    var svgArr = [],
+        top = 0,
+        width = 0,
+        addSVG = function (svgres) {
+            // Grab width/height from exported chart
+            var svgWidth = +svgres.match(
+                    /^<svg[^>]*width\s*=\s*\"?(\d+)\"?[^>]*>/
+                )[1],
+                svgHeight = +svgres.match(
+                    /^<svg[^>]*height\s*=\s*\"?(\d+)\"?[^>]*>/
+                )[1],
+                // Offset the position of this chart in the final SVG
+                svg = svgres.replace('<svg', '<g transform="translate(0,' + top + ')" ');
+            svg = svg.replace('</svg>', '</g>');
+            top += svgHeight;
+            width = Math.max(width, svgWidth);
+            svgArr.push(svg);
+        },
+        exportChart = function (i) {
+            if (i === charts.length) {
+                return callback('<svg height="' + top + '" width="' + width +
+                  '" version="1.1" xmlns="http://www.w3.org/2000/svg">' + svgArr.join('') + '</svg>');
+            }
+            charts[i].getSVGForLocalExport(options, {}, function () {
+                console.log("Failed to get SVG");
+            }, function (svg) {
+                addSVG(svg);
+                return exportChart(i + 1); // Export next only when this SVG is received
+            });
+        };
+    exportChart(0);
+};
+
+/**
+ * Create a global exportCharts method that takes an array of charts as an argument,
+ * and exporting options as the second argument
+ */
+Highcharts.exportCharts = function (options) {
+	var new_chart1 = $('#graph1').highcharts();
+	var new_chart2 = $('#graph2').highcharts();
+	var charts = [new_chart1, new_chart2];
+    options = Highcharts.merge(Highcharts.getOptions().exporting, options);
+
+		// Get SVG asynchronously and then download the resulting SVG
+    Highcharts.getSVG(charts, options, function (svg) {
+        Highcharts.downloadSVGLocal(svg, options, function () {
+            console.log("Failed to export on client side");
+        });
+    });
+};
+
+// Set global default options for all charts
+Highcharts.setOptions({
+    exporting: {
+        fallbackToExportServer: false // Ensure the export happens on the client side or not at all
+    }
+});

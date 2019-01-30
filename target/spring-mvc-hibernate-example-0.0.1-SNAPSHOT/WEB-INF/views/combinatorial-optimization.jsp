@@ -8,7 +8,7 @@
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <title> Matilda </title>
   <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css">
-  <link rel="stylesheet" href="/resources/css/matilda.css">
+  <link rel="stylesheet" href="<c:url value="/resources/css/matilda.css" /> ">
   <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script>
@@ -54,7 +54,7 @@ img{
 		<%@include file="/menu.jsp" %>
 		
 		<h1 id="all">Combinatorial Optimization Problems</h1>
-      	<div id="tsp">
+      	<div id="tsp" class="problem_container">
 	       <h2 style="text-align: center">Travelling Salesman Problem</h2>
 	    	<p><img src="${home}resources/images/tsp.jpeg" alt="TSP" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
 	        The traveling salesman problem (TSP) is an algorithmic problem tasked with finding the 
@@ -76,9 +76,9 @@ img{
 <!-- 			</ol>	 -->
 		</div>
 		
-		<div id="graphcoloring">
+		<div id="graphcoloring" class="problem_container">
 	       <h2 style="text-align: center">Graph Coloring Problem</h2>
-	    	<p><img src="${home}resources/images/graphcoloring.png" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
+	    	<p><img src="<c:url value="/resources/images/graphcoloring.png" />" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
 	        In graph theory, graph coloring is a special case of graph labeling; it is an assignment 
 	        of labels traditionally called "colors" to elements of a graph subject to certain 
 	        constraints. In its simplest form, it is a way of coloring the vertices of a graph 
@@ -95,14 +95,36 @@ img{
 			often stated and studied as is. That is partly for perspective, and partly because 
 			some problems are best studied in non-vertex form, as for instance is edge coloring.</p>
 	        <h2>Downloads</h2>
-<!-- 	        <ol><li><a href="http://users.monash.edu.au/~ksmiles/matilda/graphs.zip">Evolved graphs </a> from Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", Computers & Operations Research, vol. 63, pp. 102-113, 2015.</li> -->
-<!-- 				<li><a href="http://users.monash.edu.au/~ksmiles/matilda/tsp.zip">Evolved TSP </a> instances from Smith-Miles, K. and van Hemert, J. Discovering the suitability of optimisation algorithms by learning from evolved instances, Ann Math Artif Intell, pp. 61-87, 2011.</li> -->
-<!-- 			</ol>	 -->
+	        <h3>Publications</h3>
+	        <ol>
+	        	<li><a href="#">Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", 
+	        	Computers & Operations Research, vol. 63, pp. 102-113, 2015.</a></li>
+	        	<li><a href="#">Smith-Miles, K. A., Baatar, D., Wreford, B. and Lewis, R., “Towards Objective Measures of Algorithm Performance across Instance Space”, 
+	        	Computers & Operations Research, vol. 45, pp. 12-24, 2014.</a></li>
+	        </ol>
+	        <h3>Instances</h3>
+	        <ol>
+	        	<li>
+	        		<a href="<c:url value="/resources/datasets/graph-coloring/instances/graphs.zip" />">Evolved Graphs </a>
+	        	</li>
+ 			</ol>	
+ 			<h3>Features</h3>
+ 			<p>A list of the features we extracted for experiments published in our papers is:<br>
+<!--  			<table> -->
+<!--  				<tr> -->
+<!--  					<td>Vertices</td><td>Edes</td><td>Degree Mean</td><td>Degree</td> -->
+<!--  				</tr> -->
+<!--  			</table> -->
+
+ 			Vertices, Edges, Density, Degree Mean, Degree StDev, Average Path Length, Diameter, Girth, Betweenness Centrality Mean,	Betweenness Centrality StDev, 
+ 			Clustering Coefficient,	Szeged Index, Revised Szeged Index,	Beta Bipartitivity,	Energy,	Eigenvalue StDev,	Algebraic Connectivity,	Eigenvector Centrality Mean,
+ 			Eigenvector Centrality StDev.</p>
+			<h3>Algorithms</h3>
 		</div>
 		
-		<div id="knapsack">
+		<div id="knapsack" class="problem_container">
 	       <h2 style="text-align: center">Knapsack Problem</h2>
-	    	<p><img src="${home}resources/images/knapsack.png" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
+	    	<p><img src="<c:url value="/resources/images/knapsack.png" />" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
 	        The knapsack problem or rucksack problem is a problem in combinatorial optimization: 
 	        Given a set of items, each with a weight and a value, determine the number of each item 
 	        to include in a collection so that the total weight is less than or equal to a given 
@@ -124,7 +146,7 @@ img{
 			</ol>	
 		</div>
 		
-		<div id="linearprogramming">
+		<div id="linearprogramming" class="problem_container">
 	       <h2 style="text-align: center">Linear Programming</h2>
 	    	<p><img src="${home}resources/images/linear-programming.png" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
 	        Linear programming is the process of taking various linear inequalities relating to some situation, 
@@ -143,7 +165,7 @@ img{
 			</ol>	
 		</div>
 		
-		<div id="integerprogramming">
+		<div id="integerprogramming" class="problem_container">
 	       <h2 style="text-align: center">Mixed Integer Programming</h2>
 	    	<p><img src="${home}resources/images/mixed-programming.jpeg" alt="graph coloring" align="right" width="200" height="200" border="0" style="margin-right: 20px;">
 	        An integer programming problem is a mathematical optimization or feasibility program in 
@@ -151,7 +173,7 @@ img{
 	        refers to integer linear programming (ILP), in which the objective function and the 
 	        constraints (other than the integer constraints) are linear.</p>
 
-			<p>If some decision variables are not discrete the problem is known as a <i>mixed-integer programming problem.</i></p>
+			<p>If some decision variables are not discrete the problem is known as a mixed-integer programming problem.</p>
 			<p>There are two main reasons for using integer variables when modeling problems as a linear program:</p>
 			<ul>
 				<li>The integer variables represent quantities that can only be integer. For example, it is not possible to build 3.7 cars.</li>

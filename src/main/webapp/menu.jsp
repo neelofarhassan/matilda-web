@@ -8,7 +8,7 @@
 	<body>
 		<c:url var="home" value="/" />
 	      <div id="sitemap" role="navigation">
-			  <h2>Home</h2>
+			  <h2> <a href="<c:url value="/" />">Home</a></h2>
 			  <ul>
 			  	<li>
 			      <a href="<c:url value="/newuser" />">New User</a>
@@ -76,18 +76,17 @@
 			        </ul>
 			      </div>
 			    </li>
-			    <li>
-			      <a href="contact-us">Library</a>
-			      <div class="inner">
-			      	<ul>
-			      		<li><a href="">Algorithms</a></li>
-			      		<li><a href="">Instances</a></li>
-			      		<li><a href="">Papers</a></li>
-			      		<li><a href="">Features</a></li>
-<!-- 			      		<li><a href="">Instance Space Analysis</a></li> -->
-			      	</ul>
-			      </div>
-			    </li>
+<!-- 			    <li> -->
+<!-- 			      <a href="contact-us">Library</a> -->
+<!-- 			      <div class="inner"> -->
+<!-- 			      	<ul> -->
+<!-- 			      		<li><a href="">Algorithms</a></li> -->
+<!-- 			      		<li><a href="">Instances</a></li> -->
+<!-- 			      		<li><a href="">Papers</a></li> -->
+<!-- 			      		<li><a href="">Features</a></li> -->
+<!-- 			      	</ul> -->
+<!-- 			      </div> -->
+<!-- 			    </li> -->
 			    <li>
 			      <a href="/another">Data Analytics</a>
 			      <div class="inner"> 

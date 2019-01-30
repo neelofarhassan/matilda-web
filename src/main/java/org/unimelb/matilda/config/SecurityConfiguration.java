@@ -40,7 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().
-		authorizeRequests().antMatchers("/", "/submit", "/data-analytics")
+		authorizeRequests()
+		.antMatchers("/", "/submit", "/data-analytics")
         .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
         .antMatchers("/list", "/newuserslist", "/approveuser-**")
         .access("hasRole('ADMIN')")
@@ -49,8 +50,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .loginPage("/login").loginProcessingUrl("/login")
         .usernameParameter("ssoId").passwordParameter("password").and()
         .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-        .tokenValiditySeconds(86400).and().exceptionHandling().accessDeniedPage("/Access_Denied").and()
+        .tokenValiditySeconds(86400).and().exceptionHandling().accessDeniedPage("/Access_Denied")
+//       For ssl/tls
+        .and()
+//        .requiresChannel().antMatchers("/login").requiresSecure()
         .requiresChannel().antMatchers("/submit", "/data-analytics", "/list", "/newuserslist", "/approveuser", "/delete-user-*", "/login").requiresSecure();
+//        .requiresChannel().anyRequest().requiresSecure();
+		
+		//previously used
 //        		http.authorizeRequests().antMatchers("/", "/submit")
 //                .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
 //                .antMatchers("/list", "/newuserslist", "/approveuser-**")

@@ -330,13 +330,8 @@ ul.verticalRadios {
 }
 .shell-wrap {
   width: 800px;
-/* 	margin-left: 25%;  */
-/* 	margin-right: 25%;  */
-/* 	margin-top: 20px;  */
-/*   margin-bottom: 100px;  */
   margin: 50px auto 100px auto;
   box-shadow: 0 0 30px rgba(0,0,0,0.4);
-
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -371,7 +366,7 @@ ul.verticalRadios {
 
 .shell-body {
   margin: 0;
-  padding-left: 10px;
+  padding-left: 3px;
   list-style: none;
   background: #141414;
   color: #45D40C;
@@ -449,7 +444,10 @@ ul.verticalRadios {
 
 #graph_container{
 	margin-bottom:100px;
-
+	width: 100%;
+	text-align: center;
+	display:none;
+	display: inline-block;
 }
 
 .metric_description {
@@ -512,4 +510,71 @@ ul.verticalRadios {
 #loader{
 	position: absolute;
 	top: 25%;
+}
+/* .graph_body{ */
+/* 	width: 800px;  */
+/* 	height: 850px;  */
+/* 	margin-top: 50px; */
+/* 	display: inline-block; */
+/* } */
+.highcharts_graphcontainer{
+	width: 800px; 
+	height: 850px; 
+	margin-top: 50px;
+}
+#main_container{
+	text-align: center;
+}
+#download_all{
+	float: right;
+}
+.features_list{
+	margin-left: auto;
+}
+.features_list ul li {
+    display: block;
+    width: 25%;
+    float: left;
+}
+.problem_container{
+	margin-bottom: 50px;
+}
+#footprint_wrapper{
+	text-align: center;
+}
+#graph_header h2{
+	text-align: center;
+}
+#feature_selector_container{
+	text-align: left;
+}
+#feature_select{
+	width: 250px;
+}
+#graph_features{
+	width: 45%;
+	float: left;
+}
+#bulk_downloads{
+	width: 55%;
+	float: left;
+}
+.bulk_downloads_buttons{
+	float: left;
+	padding-right: 10px;
+}
+#footprint_header h1{
+	text-align: center !important;
+}
+.buttonlike_link {
+  font: bold 1em Arial;
+  text-decoration: none !important;
+  background-color: #EEEEEE;
+  color: #000000;
+  padding: 2px 6px 2px 6px;
+  border-radius: 4px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
 }

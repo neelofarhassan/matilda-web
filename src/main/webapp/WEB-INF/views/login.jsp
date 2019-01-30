@@ -68,13 +68,9 @@
 		        <div>
 		        	<button type="submit" value="Login" class="button cta">LOGIN</button>
 		        </div>
+		        <a href="<c:url value="/newuser" />" class="no_underline" ><strong>New User? Sign Up.</strong></a>
 	        </form>
-	        
-	        <div id="guestLibrary">
-		        <p>
-		        	<a href="newuser" class="btn" target="_self">New User? Sign Up.</a>
-		        </p>
-		        </div>
+
         </section>
 
 

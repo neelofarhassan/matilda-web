@@ -333,7 +333,6 @@ public class AppController {
     
     @RequestMapping(value="/data-analytics", method=RequestMethod.GET)
     public String showFootprintGenerationForm(@ModelAttribute ALgorithmicFootPrint algorithm, Model model, HttpServletRequest request) {
-//    	Algorithm algorithm = new Algorithm();
     	if(isCurrentAuthenticationAnonymous()) {
     		return "redirect:/login";
     	}
@@ -420,7 +419,7 @@ public class AppController {
         
     @RequestMapping(value="/generate-footprint", method=RequestMethod.POST)
     public ModelAndView generateFootPrint(HttpServletRequest servletRequest, @ModelAttribute @Valid ALgorithmicFootPrint algorithm, BindingResult result, Model model) throws IOException {
-    	if(isCurrentAuthenticationAnonymous()) { 
+     	if(isCurrentAuthenticationAnonymous()) { 
     		return new ModelAndView("redirect:/login");
     	}else {
     		
@@ -455,18 +454,18 @@ public class AppController {
 	        	}
 	        	
 	        	File directory = new File(userDataPath + "/" + userName + "/" + problemName);
-//	        	if(!directory.exists()) {
-//	        		try {
-//	        		directory.mkdirs();
-//	        		}catch(Exception e) {
-//	        			logger.error("error making directory: " + directory.getAbsolutePath());
-//	        		}
-//	        	}else {
-//	        		boolean cleared = clearUserDirectory(directory);
-//	        		if(cleared) {
-//	        			logger.info("user directory cleared successfully: " + directory.getAbsolutePath());
-//	        		}
-//	        	}
+	        	if(!directory.exists()) {
+	        		try {
+	        		directory.mkdirs();
+	        		}catch(Exception e) {
+	        			logger.error("error making directory: " + directory.getAbsolutePath());
+	        		}
+	        	}else {
+	        		boolean cleared = clearUserDirectory(directory);
+	        		if(cleared) {
+	        			logger.info("user directory cleared successfully: " + directory.getAbsolutePath());
+	        		}
+	        	}
 
 	        	
 	        	String newAlgorithm = servletRequest.getParameter("new_algo");
@@ -493,18 +492,18 @@ public class AppController {
         		algorithm.getProblem().setProblemName(problemName);
         		
             	File directory = new File(userDataPath + "/" + userName + "/" + problemName);
-//            	if(!directory.exists()) {
-//            		try {
-//            		directory.mkdirs();
-//            		}catch(Exception e) {
-//            			logger.error("error making directory: " + directory.getAbsolutePath());
-//            		}
-//            	}else {
-//            		boolean cleared = clearUserDirectory(directory);
-//            		if(cleared) {
-//            			logger.info("user directory cleared successfully: " + directory.getAbsolutePath());
-//            		}
-//            	}
+            	if(!directory.exists()) {
+            		try {
+            		directory.mkdirs();
+            		}catch(Exception e) {
+            			logger.error("error making directory: " + directory.getAbsolutePath());
+            		}
+            	}else {
+            		boolean cleared = clearUserDirectory(directory);
+            		if(cleared) {
+            			logger.info("user directory cleared successfully: " + directory.getAbsolutePath());
+            		}
+            	}
         		
         		MultipartFile customPerformanceFile = algorithm.getCustomPerformanceFile();
         		logger.info("submitting performance file for custom problem. ");
@@ -525,10 +524,10 @@ public class AppController {
         	model.addAttribute("PerformanceMetricLabel", algorithm.getAlgorithm().getPerformanceMetricLabel());
         	
         	
-//        	String[] jobOutput = executeFootprintGenerationMatlabCode(userName, problemName);
-//        	boolean success = Boolean.parseBoolean(jobOutput[0]);
-        	String[] jobOutput = {"true", "1"};
-        	boolean success = true;
+        	String[] jobOutput = executeFootprintGenerationMatlabCode(userName, problemName);
+        	boolean success = Boolean.parseBoolean(jobOutput[0]);
+//        	String[] jobOutput = {"true", "1"};
+//        	boolean success = true;
         	if(success) {
             	File file = new File(userDataPath + "/" + userName + "/" + problemName + "/matilda_logs.txt");
             	int initialWait = 2000;

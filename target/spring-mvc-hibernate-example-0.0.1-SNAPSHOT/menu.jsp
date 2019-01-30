@@ -76,18 +76,17 @@
 			        </ul>
 			      </div>
 			    </li>
-			    <li>
-			      <a href="contact-us">Library</a>
-			      <div class="inner">
-			      	<ul>
-			      		<li><a href="">Algorithms</a></li>
-			      		<li><a href="">Instances</a></li>
-			      		<li><a href="">Papers</a></li>
-			      		<li><a href="">Features</a></li>
-<!-- 			      		<li><a href="">Instance Space Analysis</a></li> -->
-			      	</ul>
-			      </div>
-			    </li>
+<!-- 			    <li> -->
+<!-- 			      <a href="contact-us">Library</a> -->
+<!-- 			      <div class="inner"> -->
+<!-- 			      	<ul> -->
+<!-- 			      		<li><a href="">Algorithms</a></li> -->
+<!-- 			      		<li><a href="">Instances</a></li> -->
+<!-- 			      		<li><a href="">Papers</a></li> -->
+<!-- 			      		<li><a href="">Features</a></li> -->
+<!-- 			      	</ul> -->
+<!-- 			      </div> -->
+<!-- 			    </li> -->
 			    <li>
 			      <a href="/another">Data Analytics</a>
 			      <div class="inner"> 

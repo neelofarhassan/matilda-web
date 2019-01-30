@@ -6,10 +6,12 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-  <title> Matilda </title>
-  <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css">
-  <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <%@include file="/includes.jsp" %>
+  <script type="text/javascript" src="<c:url value="/resources/scripts/matilda.js" /> "></script>
+<!--   <title> Matilda </title> -->
+<!--   <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css"> -->
+<!--   <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script> -->
+<!--   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> -->
   <script type="text/javascript">
   jQuery(document).ready(function() {
 	$('#problems').hover(function(){
@@ -56,6 +58,14 @@
 				for real-world applications. <a href="about-matilda">Learn More ...</a></li>		
 			</ul>
 			</div>
+			
+			<div>
+			<div id="container" style="height: 400px; width: 500px"></div>
+<div id="graph1" style="width: 800px; height: 850px; margin-top: 50px; display: inline-block;"></div>
+<div id="graph2" style="height: 200px"></div>
+			</div>
+			<div  id="download_all" ><button id="export">Download all</button></div>
+			
         </div>
       </div>
       <%@include file="/footer.jsp" %>
