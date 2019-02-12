@@ -8,18 +8,9 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <title> Matilda </title>
-  <link rel="stylesheet" href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css">
-  <link rel="stylesheet" href="<c:url value="/resources/css/matilda.css" /> ">
-  <script src="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.js"></script>
-  <style>
-  	#main_container {
-  	padding-top:50px;
-  	padding-bottom:50px;
-  	}
-  </style>
+<%@include file="/includes.jsp" %>
 </head>
 <body>
-	
   <div class="uomcontent">
     <div class="page-inner">
 	  <%@include file="/breadcrumbs.jsp" %>

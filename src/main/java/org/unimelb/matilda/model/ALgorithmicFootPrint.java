@@ -41,7 +41,23 @@ private Integer maxRestartFunEvals = 0;
 private Double maxFunEvals = Math.exp(4);
 private Boolean parallelEval = false;
 private Boolean DispFinal = false;
+private Boolean bound = true;
+private Boolean normalization = true;
 
+
+
+public Boolean getBound() {
+	return bound;
+}
+public void setBound(Boolean bound) {
+	this.bound = bound;
+}
+public Boolean getNormalization() {
+	return normalization;
+}
+public void setNormalization(Boolean normalization) {
+	this.normalization = normalization;
+}
 public MultipartFile getCustomPerformanceFile() {
 	return customPerformanceFile;
 }

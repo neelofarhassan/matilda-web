@@ -8,7 +8,7 @@
 	<body>
 		<c:url var="home" value="/" />
 	      <div id="sitemap" role="navigation">
-			  <h2>Home</h2>
+			  <h2> <a href="<c:url value="/" />">Home</a></h2>
 			  <ul>
 			  	<li>
 			      <a href="<c:url value="/newuser" />">New User</a>

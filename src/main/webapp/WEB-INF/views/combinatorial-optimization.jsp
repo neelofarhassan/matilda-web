@@ -95,11 +95,17 @@ img{
 			often stated and studied as is. That is partly for perspective, and partly because 
 			some problems are best studied in non-vertex form, as for instance is edge coloring.</p>
 	        <h2>Downloads</h2>
+	        <p>If you want to use the algorithms and features we used in our publications, these can be 
+	        downloaded from here.</p>
+	        <ul>
+	        	<li><a href="<c:url value="/matildadata/graph_coloring_problem/performance.csv" />">Algorithms' Performance File</a></li>
+	        	<li><a href="<c:url value="/matildadata/graph_coloring_problem/feature.csv" />">Evolved features File</a></li>
+	        </ul>
 	        <h3>Publications</h3>
 	        <ol>
-	        	<li><a href="#">Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", 
+	        	<li><a href="https://www.sciencedirect.com/science/article/pii/S0305054815001136">Smith-Miles, K. A. and Bowly, S., "Generating New Test Instances by Evolving in Instance Space", 
 	        	Computers & Operations Research, vol. 63, pp. 102-113, 2015.</a></li>
-	        	<li><a href="#">Smith-Miles, K. A., Baatar, D., Wreford, B. and Lewis, R., “Towards Objective Measures of Algorithm Performance across Instance Space”, 
+	        	<li><a href="https://www.sciencedirect.com/science/article/pii/S0305054813003389">Smith-Miles, K. A., Baatar, D., Wreford, B. and Lewis, R., “Towards Objective Measures of Algorithm Performance across Instance Space”, 
 	        	Computers & Operations Research, vol. 45, pp. 12-24, 2014.</a></li>
 	        </ol>
 	        <h3>Instances</h3>
@@ -109,17 +115,50 @@ img{
 	        	</li>
  			</ol>	
  			<h3>Features</h3>
- 			<p>A list of the features we extracted for experiments published in our papers is:<br>
-<!--  			<table> -->
-<!--  				<tr> -->
-<!--  					<td>Vertices</td><td>Edes</td><td>Degree Mean</td><td>Degree</td> -->
-<!--  				</tr> -->
-<!--  			</table> -->
-
- 			Vertices, Edges, Density, Degree Mean, Degree StDev, Average Path Length, Diameter, Girth, Betweenness Centrality Mean,	Betweenness Centrality StDev, 
- 			Clustering Coefficient,	Szeged Index, Revised Szeged Index,	Beta Bipartitivity,	Energy,	Eigenvalue StDev,	Algebraic Connectivity,	Eigenvector Centrality Mean,
- 			Eigenvector Centrality StDev.</p>
+ 			<p>A list of features we extracted for experiments published in our papers is:<br>
+			<div id="content">
+			     <div class="columns">
+			         <ul>
+			            <li>Vertices</li>
+			            <li>Edges</li>
+			            <li>Density</li>
+			            <li>Degree Mean</li>
+			            <li>Degree StDev</li>
+			            <li>Average Path Length</li>
+			            <li>Diameter</li>
+			            <li>Girth</li>
+			            <li>Betweenness Centrality Mean</li>
+			            <li>Betweenness Centrality StDev</li>
+			            <li>Clustering Coefficient</li>
+			            <li>Szeged Index</li>
+			            <li>Revised Szeged Index</li>
+			            <li>Beta Bipartitivity</li>
+			            <li>Energy</li>
+			            <li>Eigenvalue StDev</li>
+			            <li>Algebraic Connectivity</li>
+			            <li>Eigenvector Centrality Mean</li>
+			            <li>Eigenvector Centrality StDev</li>
+			           </ul>         
+			     </div>
+			     Code for feature extraction can be downloaded from <a href="no_underline">here</a> 
+			</div>
+			
 			<h3>Algorithms</h3>
+			A list of graph coloring algorithms available in our library is 
+						<div id="content">
+			     <div class="columns">
+			         <ul>
+			            <li>Dsatur</li>
+			            <li>tabu_col</li>
+			            <li>ant_colony</li>
+			            <li>backtracking_dsatur</li>
+			            <li>hill_climber</li>
+			            <li>hybrid_ea</li>
+			            <li>partial_col</li>
+			            <li>simple_greedy</li>
+			          </ul>         
+			     </div>
+			</div>
 		</div>
 		
 		<div id="knapsack" class="problem_container">

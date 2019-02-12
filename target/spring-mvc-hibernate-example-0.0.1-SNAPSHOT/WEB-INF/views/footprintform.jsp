@@ -186,6 +186,33 @@
 						 	<img id="hide_advanced_settings" alt="close" src="<c:url value="/resources/images/close.jpeg" />" width="50px" height="50px">
 					 	</div>
 					 	
+					 	<div style="display: inline-block;">
+							<div class="full_available_width">
+								<h2 style="display:inline;">General Settings</h2>
+							</div>
+							<div class="twocolumnform_firstcolumn">
+								<label><span class="tooltip">Beta Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Please indicate the minimal fraction of good performing algorithms within the portfolio 
+							which will make the instance easy overall.</span></span></label>
+							<form:input path="betaThreshold" style="width:100%"/>
+							</div>
+							<div class="twocolumnform_secondcolumn">
+								<label><span class="tooltip">Bound<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">????</span></span></label>
+								<form:select path="bound">
+									<form:option value="true">Yes</form:option>
+									<form:option value="false">No</form:option>
+								</form:select>
+							</div>
+							<div class="twocolumnform_firstcolumn">
+								<label><span class="tooltip">Normalization<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">????</span></span></label>
+								<form:select path="normalization">
+									<form:option value="true">Yes</form:option>
+									<form:option value="false">No</form:option>
+								</form:select>
+							</div>
+						</div>
+					 	
+					 	
+					 	
 						<div class="full_available_width">
 							<label><span class="tooltip">Beta Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Please indicate the minimal fraction of good performing algorithms within the portfolio 
 							which will make the instance easy overall.</span></span></label>
@@ -210,7 +237,7 @@
 							</div>
 						</div>
 						
-						<div>
+						<div style="display: inline-block;">
 							<div class="full_available_width">
 								<h2 style="display:inline;">Correlation</h2><span class="tooltip"><img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Compares the correlation between features and algorithm performance. Keep only the 
 								highest correlated features per algorithm. </span></span>
@@ -228,7 +255,7 @@
 							</div>
 						</div>
 						
-						<div>
+						<div style="display: inline-block;">
 							<div class="full_available_width">
 								<h2 style="display:inline;">Clustering</h2><span class="tooltip"><img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Calculates the correlation between features and use it as a distance matrix to find clusters of features. Uses silhoute 
 								analysis to determine the smallest number of clusters. To determine which features to use, we train a random forest model that takes one feature per cluster, and predict
@@ -270,66 +297,68 @@
 							</div>
 
 						</div>
-						<div>
-							<div class="full_available_width">
-								<h2 style="display:inline;">Dimensionality Reduction</h2>
+						<div style="display: inline-block;">
+								<div class="full_available_width">
+									<h2 style="display:inline;">Dimensionality Reduction</h2>
+								</div>
+								<div class="twocolumnform_firstcolumn">
+									<label><span class="tooltip">Keep the optimization routine Silent?<span class="tooltiptext"></span></span></label>
+									<form:select path="DispFinal">
+										<form:option value="true">True</form:option>
+										<form:option value="false">False</form:option>
+									</form:select>
+								</div>
+								<div class="twocolumnform_secondcolumn">
+									<label><span class="tooltip">PBLDR Attempts<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Number of attempts made to find the best dimensionality reduction</span></span></label>
+									<form:input path="attemptsByPBLDR" style="width:100%"/>
+								</div>
+															
+								<div class="twocolumnform_secondcolumn">
+									<label><span class="tooltip">Calculate Analytical Solution<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Calculate the analytical solution of the dimensionality reduction</span></span></label>
+									<form:select path="calculateAnalytics">
+										<form:option value="true">True</form:option>
+										<form:option value="false">False</form:option>
+									</form:select>
+								</div>
 							</div>
-							<div class="twocolumnform_firstcolumn">
-								<label><span class="tooltip">Keep the optimization routine Silent?<span class="tooltiptext"></span></span></label>
-								<form:select path="DispFinal">
-									<form:option value="true">True</form:option>
-									<form:option value="false">False</form:option>
-								</form:select>
-							</div>
-							<div class="twocolumnform_secondcolumn">
-								<label><span class="tooltip">PBLDR Attempts<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Number of attempts made to find the best dimensionality reduction</span></span></label>
-								<form:input path="attemptsByPBLDR" style="width:100%"/>
-							</div>
-														
-							<div class="twocolumnform_secondcolumn">
-								<label><span class="tooltip">Calculate Analytical Solution<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Calculate the analytical solution of the dimensionality reduction</span></span></label>
-								<form:select path="calculateAnalytics">
-									<form:option value="true">True</form:option>
-									<form:option value="false">False</form:option>
-								</form:select>
-							</div>
-							<div class="full_available_width">
-								<h2 style="display:inline;">FootPrint Settings</h2>
-							</div>
-							<div class="twocolumnform_firstcolumn">
-								<label><span class="tooltip">Density Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext"> Minimum density an area can have to be considered as part of a footprint</span></span></label>
-								<form:input path="densityThreshold" style="width:100%"/>
-							</div>
-							
-							<div class="twocolumnform_secondcolumn">
-								<label><span class="tooltip">Purity Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Minimum purity an area can have to be considered as part of a footprint </span></span></label>
-								<form:input path="purityThreshold" style="width:100%"/>
-							</div>
-							
-							<div class="twocolumnform_firstcolumn">
-								<label><span class="tooltip">Lower Distance Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Size of the smallest edge of an area</span></span></label>
-								<form:input path="lowerDistanceThreshold" style="width:100%"/>
-							</div>
-							
-							<div class="twocolumnform_secondcolumn">
-								<label><span class="tooltip">Higher Distance Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Size of the largest edge of an area</span></span></label>
-								<form:input path="higherDistanceThreshold" style="width:100%"/>
-							</div>
-							
-							<div class="twocolumnform_firstcolumn">
-								<label><span class="tooltip">Stopping Criteria<span class="tooltiptext">Stop if the fitness is <i>n</i> </span></span></label>
-								<form:input path="stoppingCriteria" style="width:100%"/>
-							</div>
-							
-<!-- 							<div class="twocolumnform_secondcolumn"> -->
-<!-- 								<label><span class="tooltip">Maximum Multiple Restarts Allowed<span class="tooltiptext">Allow multiple restarts?</span></span></label> -->
-<%-- 								<form:input path="maxRestartFunEvals" style="width:100%"/> --%>
-<!-- 							</div> -->
-							
-							<div class="twocolumnform_secondcolumn">
-								<label><span class="tooltip">Maximum Evaluations<span class="tooltiptext">Maximum number of evaluations</span></span></label>
-								<form:input path="maxFunEvals" style="width:100%"/>
-							</div>
+							<div style="display: inline-block;">
+								<div class="full_available_width">
+									<h2 style="display:inline;">FootPrint Settings</h2>
+								</div>
+								<div class="twocolumnform_firstcolumn">
+									<label><span class="tooltip">Density Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext"> Minimum density an area can have to be considered as part of a footprint</span></span></label>
+									<form:input path="densityThreshold" style="width:100%"/>
+								</div>
+								
+								<div class="twocolumnform_secondcolumn">
+									<label><span class="tooltip">Purity Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Minimum purity an area can have to be considered as part of a footprint </span></span></label>
+									<form:input path="purityThreshold" style="width:100%"/>
+								</div>
+								
+								<div class="twocolumnform_firstcolumn">
+									<label><span class="tooltip">Lower Distance Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Size of the smallest edge of an area</span></span></label>
+									<form:input path="lowerDistanceThreshold" style="width:100%"/>
+								</div>
+								
+								<div class="twocolumnform_secondcolumn">
+									<label><span class="tooltip">Higher Distance Threshold<img src="<c:url value="/resources/images/info.png" />" width="15" height="15"><span class="tooltiptext">Size of the largest edge of an area</span></span></label>
+									<form:input path="higherDistanceThreshold" style="width:100%"/>
+								</div>
+								
+								<div class="twocolumnform_firstcolumn">
+									<label><span class="tooltip">Stopping Criteria<span class="tooltiptext">Stop if the fitness is <i>n</i> </span></span></label>
+									<form:input path="stoppingCriteria" style="width:100%"/>
+								</div>
+								
+	<!-- 							<div class="twocolumnform_secondcolumn"> -->
+	<!-- 								<label><span class="tooltip">Maximum Multiple Restarts Allowed<span class="tooltiptext">Allow multiple restarts?</span></span></label> -->
+	<%-- 								<form:input path="maxRestartFunEvals" style="width:100%"/> --%>
+	<!-- 							</div> -->
+								
+								<div class="twocolumnform_secondcolumn">
+									<label><span class="tooltip">Maximum Evaluations<span class="tooltiptext">Maximum number of evaluations</span></span></label>
+									<form:input path="maxFunEvals" style="width:100%"/>
+								</div>
 						</div>
 						</fieldset>
 					</div>

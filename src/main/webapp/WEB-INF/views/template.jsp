@@ -11,7 +11,6 @@
 <%@include file="/includes.jsp" %>
 </head>
 <body>
-	
   <div class="uomcontent">
     <div class="page-inner">
 	  <%@include file="/breadcrumbs.jsp" %>

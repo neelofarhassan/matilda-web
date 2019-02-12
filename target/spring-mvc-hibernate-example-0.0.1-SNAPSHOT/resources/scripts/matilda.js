@@ -434,7 +434,7 @@ function showExecutionLogs(user, problem, modificationTime, lineNumber, logConte
 					$('#error_container').html('<p><font color="red"><h2>An error occured !!! </h2></font><br><br>Please see log window for details.</p> ');
 				}else{
 					showPerformanceTable(user, problem);
-					$('#graph_container').css("display","block");
+					$('#visibility_control_div').removeClass('hidden_div').addClass('display_div');
 					showDemoGraph(user, problem, 'feature_1');
 				}
 			}

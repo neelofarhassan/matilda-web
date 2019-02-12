@@ -50,25 +50,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .loginPage("/login").loginProcessingUrl("/login")
         .usernameParameter("ssoId").passwordParameter("password").and()
         .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-        .tokenValiditySeconds(86400).and().exceptionHandling().accessDeniedPage("/Access_Denied")
-//       For ssl/tls
-        .and()
+        .tokenValiditySeconds(86400).and().exceptionHandling().accessDeniedPage("/Access_Denied");
+//        .and()
 //        .requiresChannel().antMatchers("/login").requiresSecure()
-        .requiresChannel().antMatchers("/submit", "/data-analytics", "/list", "/newuserslist", "/approveuser", "/delete-user-*", "/login").requiresSecure();
+//        .requiresChannel().antMatchers("/submit", "/data-analytics", "/list", "/newuserslist", "/approveuser", "/delete-user-*", "/login").requiresSecure();
 //        .requiresChannel().anyRequest().requiresSecure();
-		
-		//previously used
-//        		http.authorizeRequests().antMatchers("/", "/submit")
-//                .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
-//                .antMatchers("/list", "/newuserslist", "/approveuser-**")
-//                .access("hasRole('ADMIN')")
-//                .antMatchers("/delete-user-*").access("hasRole('ADMIN')").antMatchers("/edit-user-*")
-//                .access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().successHandler(customSuccessHandler)
-//                .loginPage("/login").loginProcessingUrl("/login")
-//                .usernameParameter("ssoId").passwordParameter("password").and()
-//                .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-//                .tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
-    	
+  	
 
     }
  

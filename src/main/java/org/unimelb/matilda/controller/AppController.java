@@ -34,7 +34,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
-import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -516,7 +515,7 @@ public class AppController {
             	customFeatureFile.transferTo(featureFile);
         	}
         		JSONUtil jsonUtil = new JSONUtil();
-        		jsonUtil.createConfigurationJSON(userName, userDataPath, algorithm);
+        		jsonUtil.createConfigurationJSON(userName, userDataPath, algorithm, problemName);
         	
         	
         	String algorithmFootPrint = userDataPath + "/" + userName + "/" + problemName +  "/footprint_portfolio.png";
@@ -817,6 +816,38 @@ public class AppController {
     	return "highcharts-test";
     }
     
+    @GetMapping("/index1")
+    public String homeTest() {
+    return "index1";	
+    }
+    @GetMapping("/index2")
+    public String homeTest2() {
+    return "index2";	
+    }
+    @GetMapping("/index3")
+    public String homeTest3() {
+    return "index3";	
+    }
+    @GetMapping("/index4")
+    public String homeTest4() {
+    return "index4";	
+    }
+    @GetMapping("/index5")
+    public String homeTest5() {
+    return "index5";	
+    }
+    @GetMapping("/index6")
+    public String homeTest6() {
+    return "index6";	
+    }
+    @GetMapping("/index7")
+    public String homeTest7() {
+    return "index7";	
+    }
+    @GetMapping("/index8")
+    public String homeTest8() {
+    return "index8";	
+    }
     private boolean clearUserDirectory(File directory) {
     		File[] directoryContents = directory.listFiles();
     		for(File file: directoryContents) {

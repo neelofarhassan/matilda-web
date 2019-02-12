@@ -38,7 +38,7 @@
 					<div id="main_container">
 				      	<c:url var="home" value="/" />
 						<%@include file="/menu.jsp" %>
-						<header id="footprint_header">
+						<header id="centeralign_header">
 							<h1>Footprint Analysis</h1> <br> <h2>${userFriendlyProblemName}</h2>
 						</header>
 						<div id="footprint_wrapper">
@@ -57,35 +57,37 @@
 					  					</tr>
 					  				</table>
 					  			</div>
-					  			<div class="shell-body" id="logs"></div>
+					  			<div class="shell-body" id="logs">
+					  				<div style="">
+					  					<h2><font color="red">&#9888; Please be aware that the execution logs and other submitted files will be deleted by cancelling the execution. </font></h2>
+					  				</div>
+					  			</div>
 							</div>
 							
 							<div id="error_container"></div>
 							<div id="graph_container">
-								<div id="graph_header">
-										<h2>Instance Space: Distribution of selected features/algorithms</h2>
-								</div>
-								<div>
-									<div id="feature_selector_container">
-										<form>
-											<fieldset>
-												<label for="feature_select"><strong>Select a feature/algorithm:</strong></label>
-												<div id="graph_features"></div>
-												<div id="bulk_downloads">
-<!-- 													<span class="bulk_downloads_buttons"><button id="export-jpg">Download all - jpg</button></span> -->
-<!-- 													<span class="bulk_downloads_buttons"><button id="export-pdf">Download all - pdf</button></span> -->
-<!-- 													<button id='save_btn'>Save Chart</button> -->
-<!-- 													<a id="export-test" href="#" class="buttonlike_link">export test</a> -->
-													<a id="export-jpeg" href="#" class="buttonlike_link">Download as JPEG</a>
-													<a id="export-pdf" href="#" class="buttonlike_link">Download as PDF</a>
-												</div>
-											</fieldset>
-										</form>
+								<div id="visibility_control_div" class="hidden_div">
+									<div id="graph_header">
+											<h2>Instance Space: Distribution of selected features/algorithms</h2>
 									</div>
-									<div id="graph1" style="width: 800px; height: 850px; margin-top: 50px; display: inline-block;"></div>
+									<div>
+										<div id="feature_selector_container">
+											<form>
+												<fieldset>
+													<label for="feature_select"><strong>Select a feature/algorithm:</strong></label>
+													<div id="graph_features"></div>
+													<div id="bulk_downloads">
+														<a id="export-jpeg" href="#" class="buttonlike_link">Download All as JPEG</a>
+														<a id="export-pdf" href="#" class="buttonlike_link">Download All as PDF</a>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										<div id="graph1" style="width: 800px; height: 850px; margin-top: 50px; display: inline-block;"></div>
+									</div>
+									<div id="graph2" style="width: 800px; height: 850px; margin-top: 50px; display: inline-block;"></div>
+									<div id="table_container" ></div>
 								</div>
-								<div id="graph2" style="width: 800px; height: 850px; margin-top: 50px; display: inline-block;"></div>
-								<div id="table_container" ></div>
 							</div>
 						</div>
 					</div>

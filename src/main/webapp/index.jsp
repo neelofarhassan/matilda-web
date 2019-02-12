@@ -21,11 +21,19 @@
 						<h1 style="text-shadow:rgba(0,0,0,0.6) 0px 0px 10px;max-width:100%;width:100%;text-align:center;">MATILDA - Melbourne Algorithm & Test Instance </br>Library with Data Analytics</h1>
 					</div>
 				</header>
-				<div id="home_main_container">
+				<div id="home_main_container" style="font-family : Comic Sans MS;font-size: 18px;">
+				<h1>A Tagline is really important !!!! <br> let's create one now</h1>
 					<p><strong>Welcome to Matilda! </strong>This website allows you to analyze the performance
 					of an algorithm across the instance space. You can also download instances, research publications 
 					related to MATILDA and source code for 
-					algorithms and feature generation <a class='no_underline detail' href="about-matilda">Learn More ...</a></p>
+					algorithms and feature generation <a class='no_underline detail' href="<c:url value="/about-matilda" /> ">Learn More ...</a></p>
+					
+					<div>
+						<a href="<c:url value="/newuser" /> "><img alt="" src="<c:url value="/resources/images/circle_register_green.png" /> "></a>
+						<a href="<c:url value="/data-analytics" /> "><img alt="" src="<c:url value="/resources/images/circle_upload_green.png" /> "></a>
+						<a href="<c:url value="/combinatorial-problem" /> "><img alt="" src="<c:url value="/resources/images/circle_download_green.png" /> "></a>
+					</div>
+					
 				</div>
 				<div>
 				 </div>
